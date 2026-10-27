@@ -1,0 +1,43 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 300" width="100%" height="100%">
+  <defs>
+    <linearGradient id="bgGradCan" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#EFF6FF"/>
+      <stop offset="100%" stop-color="#DBEAFE"/>
+    </linearGradient>
+    <filter id="shadowCan" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="0" dy="6" stdDeviation="8" flood-opacity="0.14"/>
+    </filter>
+  </defs>
+  <rect width="400" height="300" rx="16" fill="url(#bgGradCan)"/>
+  
+  <g filter="url(#shadowCan)">
+    <!-- Tall Sardines Can (ABC style) -->
+    <path d="M110 110 L190 110 L190 230 L110 230 Z" fill="#DC2626"/>
+    <!-- Top metal rim -->
+    <ellipse cx="150" cy="110" rx="40" ry="12" fill="#E5E7EB" stroke="#9CA3AF" stroke-width="2"/>
+    <ellipse cx="150" cy="110" rx="34" ry="9" fill="#D1D5DB"/>
+    <!-- Pull ring -->
+    <circle cx="150" cy="110" r="6" fill="none" stroke="#6B7280" stroke-width="2"/>
+    <!-- Bottom rim -->
+    <ellipse cx="150" cy="230" rx="40" ry="12" fill="#DC2626"/>
+    <!-- Can label -->
+    <rect x="110" y="135" width="80" height="65" fill="#FFFFFF"/>
+    <text x="150" y="156" font-family="'Plus Jakarta Sans', sans-serif" font-size="10" font-weight="800" fill="#DC2626" text-anchor="middle">SARDINES</text>
+    <!-- Fish icon on label -->
+    <path d="M130 175 Q150 165 170 175 Q150 185 130 175 Z" fill="#0284C7"/>
+    <polygon points="125,170 125,180 132,175" fill="#0284C7"/>
+    
+    <!-- Trapezoid Corned Beef Can (Pronas style) -->
+    <path d="M225 150 L285 150 L300 235 L210 235 Z" fill="#B91C1C" rx="4"/>
+    <!-- Top lid -->
+    <ellipse cx="255" cy="150" rx="30" ry="8" fill="#E5E7EB"/>
+    <!-- Corned beef label -->
+    <rect x="220" y="170" width="70" height="45" rx="3" fill="#FBBF24"/>
+    <text x="255" y="190" font-family="'Plus Jakarta Sans', sans-serif" font-size="9" font-weight="900" fill="#1F2937" text-anchor="middle">KORNET</text>
+    <text x="255" y="202" font-family="'Plus Jakarta Sans', sans-serif" font-size="8" font-weight="700" fill="#B91C1C" text-anchor="middle">SAPI</text>
+  </g>
+  
+  <!-- Badge -->
+  <rect x="250" y="24" width="126" height="32" rx="16" fill="#0284C7"/>
+  <text x="313" y="45" font-family="'Plus Jakarta Sans', sans-serif" font-size="12" font-weight="700" fill="#FFFFFF" text-anchor="middle">CANNED & MEALS</text>
+</svg>

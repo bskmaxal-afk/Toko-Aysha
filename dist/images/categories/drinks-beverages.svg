@@ -1,0 +1,48 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 300" width="100%" height="100%">
+  <defs>
+    <linearGradient id="bgGradDrinks" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#EEF5F1"/>
+      <stop offset="100%" stop-color="#D4E6DC"/>
+    </linearGradient>
+    <filter id="shadowDrinks" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="0" dy="6" stdDeviation="8" flood-opacity="0.12"/>
+    </filter>
+  </defs>
+  <rect width="400" height="300" rx="16" fill="url(#bgGradDrinks)"/>
+  
+  <g filter="url(#shadowDrinks)">
+    <!-- Classic Teh Botol Tetra Pak -->
+    <path d="M100 110 L160 95 L175 220 L115 235 Z" fill="#E65100" rx="4"/>
+    <path d="M100 110 L160 95 L145 80 L85 95 Z" fill="#EF6C00"/>
+    <path d="M85 95 L100 110 L115 235 L100 220 Z" fill="#BF360C"/>
+    <!-- Straw -->
+    <line x1="135" y1="90" x2="155" y2="40" stroke="#FFFFFF" stroke-width="6" stroke-linecap="round"/>
+    <line x1="155" y1="40" x2="175" y2="35" stroke="#FFFFFF" stroke-width="6" stroke-linecap="round"/>
+    <!-- Jasmine Flower on carton -->
+    <circle cx="138" cy="155" r="5" fill="#FFFDE7"/>
+    <circle cx="138" cy="147" r="5" fill="#FFFFFF"/>
+    <circle cx="138" cy="163" r="5" fill="#FFFFFF"/>
+    <circle cx="130" cy="155" r="5" fill="#FFFFFF"/>
+    <circle cx="146" cy="155" r="5" fill="#FFFFFF"/>
+    <text x="135" y="195" font-family="'Plus Jakarta Sans', sans-serif" font-size="12" font-weight="800" fill="#FFFFFF" text-anchor="middle" transform="rotate(-7 135 195)">TEH</text>
+
+    <!-- Indonesian Coffee Glass / Cangkir Kopi -->
+    <path d="M220 130 L275 130 L265 225 L230 225 Z" fill="#3E2723"/>
+    <ellipse cx="247" cy="130" rx="27" ry="8" fill="#5D4037"/>
+    <ellipse cx="247" cy="130" rx="24" ry="6" fill="#1B120C"/>
+    <!-- Glass Saucer -->
+    <ellipse cx="247" cy="228" rx="44" ry="10" fill="#E0E0E0" stroke="#BDBDBD" stroke-width="2"/>
+    <!-- Coffee steam -->
+    <path d="M240 115 Q245 95 240 80" stroke="#795548" stroke-width="3" stroke-linecap="round" fill="none" opacity="0.6"/>
+    <path d="M255 110 Q260 90 255 75" stroke="#795548" stroke-width="2.5" stroke-linecap="round" fill="none" opacity="0.6"/>
+    
+    <!-- Fresh Coconut with straw -->
+    <circle cx="310" cy="185" r="35" fill="#4CAF50"/>
+    <ellipse cx="310" cy="155" rx="16" ry="8" fill="#81C784"/>
+    <line x1="310" y1="155" x2="330" y2="120" stroke="#FF5722" stroke-width="4" stroke-linecap="round"/>
+  </g>
+  
+  <!-- Badge -->
+  <rect x="250" y="24" width="126" height="32" rx="16" fill="#28523C"/>
+  <text x="313" y="45" font-family="'Plus Jakarta Sans', sans-serif" font-size="12" font-weight="700" fill="#FFFFFF" text-anchor="middle">TEH & KOPI</text>
+</svg>

@@ -1,0 +1,40 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 300" width="100%" height="100%">
+  <defs>
+    <linearGradient id="bgGradHouse" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#ECFDF5"/>
+      <stop offset="100%" stop-color="#D1FAE5"/>
+    </linearGradient>
+    <filter id="shadowHouse" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="0" dy="6" stdDeviation="8" flood-opacity="0.13"/>
+    </filter>
+  </defs>
+  <rect width="400" height="300" rx="16" fill="url(#bgGradHouse)"/>
+  
+  <g filter="url(#shadowHouse)">
+    <!-- Minyak Kayu Putih Bottle (Cap Lang style) -->
+    <path d="M125 100 L145 100 L155 130 L160 230 L110 230 L115 130 Z" fill="#D1E7DD"/>
+    <!-- Green Cap -->
+    <rect x="126" y="80" width="18" height="20" rx="3" fill="#047857"/>
+    <!-- Liquid fill inside green glass -->
+    <path d="M116 140 L154 140 L158 226 L112 226 Z" fill="#A7F3D0" opacity="0.8"/>
+    <!-- Eagle Cap Lang emblem -->
+    <circle cx="135" cy="170" r="14" fill="#047857"/>
+    <text x="135" y="174" font-family="'Plus Jakarta Sans', sans-serif" font-size="11" font-weight="900" fill="#FFFFFF" text-anchor="middle">★</text>
+    <rect x="114" y="190" width="42" height="24" rx="2" fill="#FFFFFF"/>
+    <text x="135" y="200" font-family="'Plus Jakarta Sans', sans-serif" font-size="7" font-weight="800" fill="#047857" text-anchor="middle">KAYU PUTIH</text>
+    
+    <!-- Tolak Angin Sachet (Yellow Sido Muncul style) -->
+    <path d="M210 120 L290 100 L315 220 L235 240 Z" fill="#FACC15" rx="6"/>
+    <!-- Tear notch -->
+    <polygon points="210,135 218,137 210,140" fill="#CA8A04"/>
+    <!-- Tolak angin emblem -->
+    <ellipse cx="260" cy="165" rx="26" ry="18" fill="#FFFFFF" transform="rotate(-14 260 165)"/>
+    <text x="260" y="168" font-family="'Plus Jakarta Sans', sans-serif" font-size="8" font-weight="900" fill="#854D0E" text-anchor="middle" transform="rotate(-14 260 168)">TOLAK ANGIN</text>
+    <!-- Ginger root & Honey drop -->
+    <circle cx="260" cy="200" r="8" fill="#F59E0B" transform="rotate(-14 260 200)"/>
+  </g>
+  
+  <!-- Badge -->
+  <rect x="250" y="24" width="126" height="32" rx="16" fill="#059669"/>
+  <text x="313" y="45" font-family="'Plus Jakarta Sans', sans-serif" font-size="12" font-weight="700" fill="#FFFFFF" text-anchor="middle">CARE & WELLNESS</text>
+</svg>

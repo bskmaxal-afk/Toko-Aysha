@@ -1,0 +1,53 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 300" width="100%" height="100%">
+  <defs>
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FFF2EE"/>
+      <stop offset="100%" stop-color="#FCE1D9"/>
+    </linearGradient>
+    <filter id="shadow" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="0" dy="6" stdDeviation="8" flood-opacity="0.12"/>
+    </filter>
+  </defs>
+  <rect width="400" height="300" rx="16" fill="url(#bgGrad)"/>
+  
+  <!-- Decorative steam ripples -->
+  <path d="M160 80 Q170 60 160 40" stroke="#C7462B" stroke-width="3" stroke-linecap="round" fill="none" opacity="0.4"/>
+  <path d="M200 70 Q210 50 200 30" stroke="#C7462B" stroke-width="3.5" stroke-linecap="round" fill="none" opacity="0.5"/>
+  <path d="M240 80 Q250 60 240 40" stroke="#C7462B" stroke-width="3" stroke-linecap="round" fill="none" opacity="0.4"/>
+  
+  <!-- Noodle Bowl -->
+  <g filter="url(#shadow)">
+    <!-- Chopsticks -->
+    <line x1="120" y1="80" x2="310" y2="170" stroke="#8C4A28" stroke-width="7" stroke-linecap="round"/>
+    <line x1="120" y1="65" x2="300" y2="155" stroke="#6D371C" stroke-width="7" stroke-linecap="round"/>
+    
+    <!-- Outer Bowl -->
+    <path d="M100 130 C100 230 300 230 300 130 Z" fill="#C7462B"/>
+    <!-- Bowl Rim Rim Inner -->
+    <ellipse cx="200" cy="130" rx="100" ry="24" fill="#FFFFFF"/>
+    <!-- Broth -->
+    <ellipse cx="200" cy="132" rx="90" ry="18" fill="#F49E2D"/>
+    <!-- Noodles wavy lines -->
+    <path d="M135 130 Q160 115 185 132 Q210 148 235 130 Q260 115 270 130" stroke="#FFDE72" stroke-width="6" fill="none" stroke-linecap="round"/>
+    <path d="M145 136 Q170 125 195 138 Q220 150 245 135" stroke="#FFCE38" stroke-width="6" fill="none" stroke-linecap="round"/>
+    
+    <!-- Boiled Egg Half -->
+    <ellipse cx="230" cy="126" rx="22" ry="16" fill="#FFFFFF" transform="rotate(-15 230 126)"/>
+    <circle cx="230" cy="126" r="10" fill="#FF8A00"/>
+    
+    <!-- Scallions greens -->
+    <circle cx="165" cy="132" r="5" fill="#28523C"/>
+    <circle cx="178" cy="136" r="4.5" fill="#28523C"/>
+    <circle cx="170" cy="144" r="5" fill="#3D7D5B"/>
+    
+    <!-- Indonesian Red Chili slice -->
+    <path d="M190 122 C196 118 205 125 198 128 Z" fill="#E53935"/>
+    
+    <!-- Bowl decorative Indonesian Batik border -->
+    <path d="M115 150 Q125 156 135 150 Q145 156 155 150 Q165 156 175 150 Q185 156 195 150 Q205 156 215 150 Q225 156 235 150 Q245 156 255 150 Q265 156 275 150 Q285 156 290 150" stroke="#F7F3EA" stroke-width="3" fill="none" opacity="0.6"/>
+  </g>
+  
+  <!-- Badge -->
+  <rect x="250" y="24" width="126" height="32" rx="16" fill="#C7462B"/>
+  <text x="313" y="45" font-family="'Plus Jakarta Sans', sans-serif" font-size="12" font-weight="700" fill="#FFFFFF" text-anchor="middle">MI GORENG & SOTO</text>
+</svg>

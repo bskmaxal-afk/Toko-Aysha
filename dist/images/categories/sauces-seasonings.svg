@@ -1,0 +1,49 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 300" width="100%" height="100%">
+  <defs>
+    <linearGradient id="bgGradSauce" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FFF2EE"/>
+      <stop offset="100%" stop-color="#FCDCD5"/>
+    </linearGradient>
+    <filter id="shadowSauce" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="0" dy="6" stdDeviation="8" flood-opacity="0.14"/>
+    </filter>
+  </defs>
+  <rect width="400" height="300" rx="16" fill="url(#bgGradSauce)"/>
+  
+  <g filter="url(#shadowSauce)">
+    <!-- Sambal Bottle (Red) -->
+    <path d="M125 100 L145 100 L155 130 L160 230 L110 230 L115 130 Z" fill="#D32F2F"/>
+    <!-- Sambal Bottle Cap (Yellow/Green) -->
+    <rect x="126" y="80" width="18" height="20" rx="3" fill="#FBC02D"/>
+    <!-- Sambal Label -->
+    <rect x="113" y="145" width="44" height="60" rx="4" fill="#FFFFFF"/>
+    <rect x="118" y="152" width="34" height="12" rx="2" fill="#D32F2F"/>
+    <text x="135" y="161" font-family="'Plus Jakarta Sans', sans-serif" font-size="8" font-weight="800" fill="#FFFFFF" text-anchor="middle">SAMBAL</text>
+    
+    <!-- Chili Pepper icon on label -->
+    <path d="M128 185 Q135 170 142 185 Q136 195 128 185 Z" fill="#D32F2F"/>
+    <path d="M142 185 Q145 188 147 186" stroke="#28523C" stroke-width="2" fill="none"/>
+
+    <!-- Kecap Manis Bottle (Black/Green Bango style) -->
+    <path d="M225 90 L245 90 L260 125 L265 240 L205 240 L210 125 Z" fill="#1C1817"/>
+    <!-- Kecap Cap -->
+    <rect x="226" y="70" width="18" height="20" rx="3" fill="#28523C"/>
+    <!-- Kecap Label -->
+    <rect x="208" y="140" width="54" height="70" rx="4" fill="#28523C"/>
+    <circle cx="235" cy="165" r="16" fill="#F7F3EA"/>
+    <!-- Soybean emblem -->
+    <ellipse cx="232" cy="165" rx="6" ry="8" fill="#1C1817" transform="rotate(-20 232 165)"/>
+    <ellipse cx="238" cy="165" rx="6" ry="8" fill="#1C1817" transform="rotate(20 238 165)"/>
+    <text x="235" y="196" font-family="'Plus Jakarta Sans', sans-serif" font-size="9" font-weight="800" fill="#FFFFFF" text-anchor="middle">KECAP</text>
+    
+    <!-- Stone mortar & pestle (Cobek & Ulekan) in front -->
+    <ellipse cx="295" cy="225" rx="40" ry="18" fill="#424242"/>
+    <ellipse cx="295" cy="223" rx="34" ry="14" fill="#616161"/>
+    <!-- Fresh crushed red chili in cobek -->
+    <ellipse cx="295" cy="223" rx="20" ry="8" fill="#D32F2F"/>
+  </g>
+  
+  <!-- Badge -->
+  <rect x="250" y="24" width="126" height="32" rx="16" fill="#C7462B"/>
+  <text x="313" y="45" font-family="'Plus Jakarta Sans', sans-serif" font-size="12" font-weight="700" fill="#FFFFFF" text-anchor="middle">SAMBAL & KECAP</text>
+</svg>
