@@ -25,7 +25,8 @@ export default function Navbar() {
 
   const navLinks = [
     { name: 'Home', path: '/' },
-    { name: 'Products', path: '/products' },
+    { name: 'All Products', path: '/products' },
+    { name: 'Asian Imports', path: '/products?origin=imported' },
     { name: 'About Us', path: '/about' },
     { name: 'Visit Us', path: '/visit-us' },
   ];
@@ -59,26 +60,25 @@ export default function Navbar() {
             style={{
               display: 'flex',
               alignItems: 'center',
-              gap: '0.65rem',
+              gap: '0.75rem',
               textDecoration: 'none',
               flexShrink: 0
             }}
           >
-            <div 
+            <img 
+              src="/images/brand/logo.jpg" 
+              alt="Toko Aysha Asian Market Logo" 
               style={{
-                width: '42px',
-                height: '42px',
+                width: '46px',
+                height: '46px',
+                objectFit: 'contain',
                 borderRadius: 'var(--radius-md)',
-                backgroundColor: 'var(--color-primary)',
-                color: '#FFFFFF',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                boxShadow: '0 2px 8px rgba(199, 70, 43, 0.25)'
+                backgroundColor: '#FFFFFF',
+                border: '1.5px solid var(--color-border)',
+                padding: '2px',
+                boxShadow: 'var(--shadow-sm)'
               }}
-            >
-              <ShoppingBasket size={24} strokeWidth={2.2} />
-            </div>
+            />
             <div>
               <span 
                 style={{
@@ -103,7 +103,7 @@ export default function Navbar() {
                   display: 'block'
                 }}
               >
-                Indonesian Market
+                Asian Market
               </span>
             </div>
           </Link>

@@ -11,6 +11,7 @@ import {
   Tag
 } from 'lucide-react';
 import ProductImage from './ProductImage';
+import { getCountryFlag } from './ProductCard';
 import { categories } from '../data/categories';
 import { formatPrice, hasLivePrice } from '../utils/formatPrice';
 
@@ -181,7 +182,7 @@ export default function ProductDetailModal({ product, onClose }) {
               {/* Packaging spec */}
               <div style={{ fontSize: 'var(--text-sm)', color: 'var(--color-text-secondary)', marginBottom: 'var(--space-4)' }}>
                 Package Size: <strong style={{ color: 'var(--color-text-main)' }}>{product.packageSize}</strong>
-                {product.origin && ` • Product of ${product.origin}`}
+                {product.origin && ` • ${getCountryFlag(product.origin)} Product of ${product.origin}`}
               </div>
 
               {/* Price Banner */}

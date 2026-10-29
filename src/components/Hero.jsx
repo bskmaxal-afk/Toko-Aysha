@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { ArrowRight, Store, Sparkles, CheckCircle2 } from 'lucide-react';
+import { ArrowRight, Globe2, Sparkles, CheckCircle2 } from 'lucide-react';
 
 export default function Hero() {
   return (
@@ -49,7 +49,7 @@ export default function Hero() {
                   color: 'var(--color-primary)'
                 }}
               >
-                YOUR INDONESIAN GROCERY DESTINATION
+                AUTHENTIC ASIAN MARKET & GROCERY
               </span>
             </div>
 
@@ -63,7 +63,7 @@ export default function Hero() {
                 letterSpacing: '-0.025em'
               }}
             >
-              A Taste of Indonesia, <br />
+              The Vibrant Flavors of Asia, <br />
               <span style={{ color: 'var(--color-primary)' }}>Close to Home.</span>
             </h1>
 
@@ -76,7 +76,7 @@ export default function Hero() {
                 marginBottom: 'var(--space-8)'
               }}
             >
-              Discover your favorite Indonesian noodles, snacks, spices, and everyday essentials — all in one place.
+              Discover your favorite Asian groceries — from beloved Indonesian noodles, sambals, and snacks to fiery Korean ramyun, Thai coconut milk & curries, and culinary essentials from across Asia.
             </p>
 
             {/* Dual CTA Buttons */}
@@ -92,19 +92,19 @@ export default function Hero() {
                 to="/products" 
                 className="btn btn-primary btn-lg"
                 style={{
-                  boxShadow: '0 4px 14px rgba(199, 70, 43, 0.28)'
+                  boxShadow: '0 4px 14px rgba(123, 17, 26, 0.28)'
                 }}
               >
-                <span>Explore Products</span>
+                <span>Explore All Products</span>
                 <ArrowRight size={18} />
               </Link>
 
               <Link 
-                to="/visit-us" 
+                to="/products?origin=imported" 
                 className="btn btn-secondary btn-lg"
               >
-                <Store size={18} style={{ color: 'var(--color-accent)' }} />
-                <span>Visit Our Store</span>
+                <Globe2 size={18} style={{ color: 'var(--color-accent)' }} />
+                <span>Asian Imports</span>
               </Link>
             </div>
 
@@ -120,20 +120,20 @@ export default function Hero() {
             >
               <div style={{ display: 'flex', alignItems: 'center', gap: '0.45rem', fontSize: 'var(--text-xs)', fontWeight: 600, color: 'var(--color-text-main)' }}>
                 <CheckCircle2 size={16} style={{ color: 'var(--color-accent)' }} />
-                <span>60+ Indonesian Essentials</span>
+                <span>📍 Knosou 11, Athens, Greece</span>
               </div>
               <div style={{ display: 'flex', alignItems: 'center', gap: '0.45rem', fontSize: 'var(--text-xs)', fontWeight: 600, color: 'var(--color-text-main)' }}>
                 <CheckCircle2 size={16} style={{ color: 'var(--color-accent)' }} />
-                <span>Authentic National Brands</span>
+                <span>Wholesale & Retail (Χονδρική & Λιανική)</span>
               </div>
               <div style={{ display: 'flex', alignItems: 'center', gap: '0.45rem', fontSize: 'var(--text-xs)', fontWeight: 600, color: 'var(--color-text-main)' }}>
                 <CheckCircle2 size={16} style={{ color: 'var(--color-accent)' }} />
-                <span>Regular Restocks</span>
+                <span>145+ Asian & Halal Products</span>
               </div>
             </div>
           </div>
 
-          {/* Right Column: High Quality Supermarket Grocery Showcase */}
+          {/* Right Column: Official Store Banner Showcase */}
           <div 
             className="hero-visual"
             style={{
@@ -146,22 +146,24 @@ export default function Hero() {
             <div 
               style={{
                 width: '100%',
-                maxWidth: '540px',
+                maxWidth: '560px',
                 borderRadius: 'var(--radius-xl)',
                 overflow: 'hidden',
                 backgroundColor: 'var(--color-surface)',
-                border: '1.5px solid var(--color-border)',
-                boxShadow: 'var(--shadow-lg)',
-                padding: '1rem'
+                border: '2px solid var(--color-border)',
+                boxShadow: '0 12px 32px rgba(123, 17, 26, 0.12)',
+                padding: '0.5rem',
+                transition: 'transform var(--transition-normal)'
               }}
             >
               <img 
-                src="/images/hero/indonesian-groceries.svg" 
-                alt="Composition of authentic Indonesian grocery items including Indomie, Bango Kecap Manis, ABC Sambal, Teh Botol, and Pandan Rice"
+                src="/images/brand/banner.jpg" 
+                alt="Toko Aysha Asian Market Official Banner - Knosou 11, Athens Greece"
                 style={{
                   width: '100%',
                   height: 'auto',
-                  borderRadius: 'var(--radius-lg)'
+                  borderRadius: 'var(--radius-lg)',
+                  display: 'block'
                 }}
               />
             </div>

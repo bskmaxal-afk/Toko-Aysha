@@ -1,10 +1,22 @@
 import React from 'react';
-import { RotateCcw, SlidersHorizontal, ArrowUpDown } from 'lucide-react';
+import { RotateCcw, Globe2, ArrowUpDown } from 'lucide-react';
 import { categories } from '../data/categories';
+
+export const ORIGIN_OPTIONS = [
+  { id: 'all', label: 'All Asian Products', flag: '🌏' },
+  { id: 'Indonesia', label: 'Indonesia', flag: '🇮🇩' },
+  { id: 'imported', label: 'Asian Imports (Non-Indonesia)', flag: '🥢' },
+  { id: 'South Korea', label: 'South Korea', flag: '🇰🇷' },
+  { id: 'Thailand', label: 'Thailand', flag: '🇹🇭' },
+  { id: 'Sri Lanka', label: 'Sri Lanka', flag: '🇱🇰' },
+  { id: 'China', label: 'China', flag: '🇨🇳' }
+];
 
 export default function ProductFilters({
   selectedCategory,
   onSelectCategory,
+  selectedOrigin = 'all',
+  onSelectOrigin,
   selectedBrand,
   onSelectBrand,
   sortBy,
@@ -26,7 +38,100 @@ export default function ProductFilters({
         boxShadow: 'var(--shadow-sm)'
       }}
     >
-      {/* Category Pills Slider / Wrap */}
+      {/* 1. Origin / Regional Filter Pills */}
+      <div 
+        style={{ 
+          marginBottom: 'var(--space-4)', 
+          paddingBottom: 'var(--space-4)', 
+          borderBottom: '1px solid var(--color-border)' 
+        }}
+      >
+        <div 
+          style={{ 
+            display: 'flex', 
+            alignItems: 'center', 
+            justifyContent: 'space-between', 
+            marginBottom: '0.65rem' 
+          }}
+        >
+          <div 
+            style={{
+              fontSize: 'var(--text-xs)',
+              fontWeight: 800,
+              textTransform: 'uppercase',
+              letterSpacing: '0.06em',
+              color: 'var(--color-text-secondary)',
+              display: 'flex',
+              alignItems: 'center',
+              gap: '0.35rem'
+            }}
+          >
+            <Globe2 size={14} style={{ color: 'var(--color-primary)' }} />
+            <span>Regional Origin</span>
+          </div>
+
+          {selectedOrigin && selectedOrigin !== 'all' && (
+            <span 
+              style={{ 
+                fontSize: '0.72rem', 
+                color: 'var(--color-primary)', 
+                fontWeight: 700 
+              }}
+            >
+              Filtered by: {selectedOrigin === 'imported' ? 'Asian Imports (Non-Indonesia)' : selectedOrigin}
+            </span>
+          )}
+        </div>
+
+        <div 
+          className="origin-pills-row"
+          style={{
+            display: 'flex',
+            alignItems: 'center',
+            gap: '0.45rem',
+            overflowX: 'auto',
+            paddingBottom: '0.3rem',
+            WebkitOverflowScrolling: 'touch'
+          }}
+        >
+          {ORIGIN_OPTIONS.map((opt) => {
+            const isSelected = selectedOrigin.toLowerCase() === opt.id.toLowerCase();
+            return (
+              <button
+                key={opt.id}
+                type="button"
+                onClick={() => onSelectOrigin(opt.id)}
+                style={{
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  gap: '0.35rem',
+                  padding: '0.4rem 0.85rem',
+                  borderRadius: 'var(--radius-full)',
+                  fontSize: 'var(--text-xs)',
+                  fontWeight: 700,
+                  border: isSelected 
+                    ? '1.5px solid var(--color-accent)' 
+                    : '1.5px solid var(--color-border)',
+                  backgroundColor: isSelected 
+                    ? 'var(--color-accent)' 
+                    : 'var(--color-surface)',
+                  color: isSelected 
+                    ? '#FFFFFF' 
+                    : 'var(--color-text-main)',
+                  cursor: 'pointer',
+                  whiteSpace: 'nowrap',
+                  transition: 'all var(--transition-fast)'
+                }}
+              >
+                <span>{opt.flag}</span>
+                <span>{opt.label}</span>
+              </button>
+            );
+          })}
+        </div>
+      </div>
+
+      {/* 2. Category Pills Slider / Wrap */}
       <div style={{ marginBottom: 'var(--space-4)' }}>
         <div 
           style={{
@@ -38,7 +143,7 @@ export default function ProductFilters({
             marginBottom: '0.65rem'
           }}
         >
-          Categories
+          Product Categories
         </div>
 
         <div 
@@ -52,7 +157,7 @@ export default function ProductFilters({
             WebkitOverflowScrolling: 'touch'
           }}
         >
-          {/* "All Products" pill */}
+          {/* "All Categories" pill */}
           <button
             type="button"
             onClick={() => onSelectCategory('all')}
@@ -75,7 +180,7 @@ export default function ProductFilters({
               transition: 'all var(--transition-fast)'
             }}
           >
-            All Products
+            All Categories
           </button>
 
           {categories.map((cat) => {
@@ -111,7 +216,7 @@ export default function ProductFilters({
         </div>
       </div>
 
-      {/* Secondary Filter & Sort Controls Row */}
+      {/* 3. Secondary Filter & Sort Controls Row */}
       <div 
         style={{
           display: 'flex',
@@ -166,7 +271,7 @@ export default function ProductFilters({
               }}
             >
               <RotateCcw size={13} />
-              <span>Reset</span>
+              <span>Reset Filters</span>
             </button>
           )}
         </div>
@@ -175,7 +280,7 @@ export default function ProductFilters({
         <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-4)', flexWrap: 'wrap' }}>
           {/* Product Count Display */}
           <span style={{ fontSize: 'var(--text-xs)', fontWeight: 600, color: 'var(--color-text-secondary)' }}>
-            Showing <strong>{totalCount}</strong> products
+            Showing <strong>{totalCount}</strong> Asian grocery items
           </span>
 
           {/* Sort By Dropdown */}

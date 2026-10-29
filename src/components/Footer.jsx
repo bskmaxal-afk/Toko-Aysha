@@ -31,25 +31,25 @@ export default function Footer() {
               style={{
                 display: 'inline-flex',
                 alignItems: 'center',
-                gap: '0.65rem',
+                gap: '0.75rem',
                 textDecoration: 'none',
                 marginBottom: 'var(--space-4)'
               }}
             >
-              <div 
+              <img 
+                src="/images/brand/logo.jpg" 
+                alt="Toko Aysha Asian Market Logo" 
                 style={{
-                  width: '38px',
-                  height: '38px',
+                  width: '42px',
+                  height: '42px',
+                  objectFit: 'contain',
                   borderRadius: 'var(--radius-md)',
-                  backgroundColor: 'var(--color-primary)',
-                  color: '#FFFFFF',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center'
+                  backgroundColor: '#FFFFFF',
+                  border: '1.5px solid var(--color-border)',
+                  padding: '2px',
+                  boxShadow: 'var(--shadow-sm)'
                 }}
-              >
-                <ShoppingBasket size={20} />
-              </div>
+              />
               <div>
                 <span 
                   style={{
@@ -73,7 +73,7 @@ export default function Footer() {
                     color: 'var(--color-accent)'
                   }}
                 >
-                  Indonesian Market
+                  Asian Market
                 </span>
               </div>
             </Link>
@@ -96,7 +96,7 @@ export default function Footer() {
               }}
             >
               <span style={{ width: '8px', height: '8px', borderRadius: '50%', backgroundColor: 'var(--color-accent)' }}></span>
-              100% Authentic Indonesian Products
+              100% Authentic Asian Groceries
             </div>
           </div>
 
@@ -114,6 +114,11 @@ export default function Footer() {
               <li>
                 <Link to="/products" style={{ fontSize: 'var(--text-sm)', color: 'var(--color-text-secondary)' }}>
                   All Products
+                </Link>
+              </li>
+              <li>
+                <Link to="/products?origin=imported" style={{ fontSize: 'var(--text-sm)', color: 'var(--color-text-secondary)' }}>
+                  Asian Imports
                 </Link>
               </li>
               <li>

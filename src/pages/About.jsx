@@ -52,7 +52,7 @@ export default function About() {
             }}
           >
             <Sparkles size={14} />
-            <span>AUTHENTIC INDONESIAN GROCERY</span>
+            <span>AUTHENTIC ASIAN MARKET & SUPERMARKET</span>
           </div>
 
           <h1 
@@ -61,12 +61,12 @@ export default function About() {
               fontWeight: 800,
               color: 'var(--color-text-main)',
               lineHeight: 1.15,
-              maxWidth: '780px',
+              maxWidth: '820px',
               margin: '0 auto var(--space-4)',
               letterSpacing: '-0.02em'
             }}
           >
-            Bringing Authentic Indonesian Flavors Closer to You
+            Bringing Authentic Asian Flavors Closer to You
           </h1>
 
           <p 
@@ -74,17 +74,21 @@ export default function About() {
               fontSize: 'clamp(1rem, 1.5vw, 1.15rem)',
               color: 'var(--color-text-secondary)',
               lineHeight: 1.6,
-              maxWidth: '680px',
+              maxWidth: '720px',
               margin: '0 auto var(--space-8)'
             }}
           >
-            Toko Aysha was created to serve the Indonesian diaspora living abroad and introduce the rich, vibrant world of Indonesian cuisine to international food enthusiasts.
+            Toko Aysha Asian Market is your trusted neighborhood grocery destination, bringing together the finest culinary treasures from Indonesia, South Korea, Thailand, China, and across Asia for both diaspora families and international food enthusiasts.
           </p>
 
           <div style={{ display: 'flex', justifyContent: 'center', gap: 'var(--space-4)', flexWrap: 'wrap' }}>
             <Link to="/products" className="btn btn-primary btn-lg">
-              <span>Explore Products</span>
+              <span>Explore All Products</span>
               <ArrowRight size={18} />
+            </Link>
+            <Link to="/products?origin=imported" className="btn btn-outline btn-lg">
+              <Globe2 size={18} />
+              <span>Browse Asian Imports</span>
             </Link>
             <Link to="/visit-us" className="btn btn-secondary btn-lg">
               <Store size={18} />
@@ -93,12 +97,58 @@ export default function About() {
           </div>
         </div>
 
+        {/* Official Banner & Storefront Showcase */}
+        <div 
+          className="card"
+          style={{
+            backgroundColor: '#FFFFFF',
+            borderRadius: 'var(--radius-xl)',
+            overflow: 'hidden',
+            border: '1.5px solid var(--color-border)',
+            marginBottom: 'var(--space-12)',
+            boxShadow: 'var(--shadow-md)'
+          }}
+        >
+          <img 
+            src="/images/brand/banner.jpg" 
+            alt="Toko Aysha Asian Market Official Store Banner - Knosou 11, Athens, Greece" 
+            style={{
+              width: '100%',
+              maxHeight: '340px',
+              objectFit: 'cover',
+              objectPosition: 'center',
+              display: 'block'
+            }}
+          />
+          <div 
+            style={{
+              padding: 'var(--space-4) var(--space-6)',
+              backgroundColor: 'var(--color-surface-soft)',
+              display: 'flex',
+              flexWrap: 'wrap',
+              alignItems: 'center',
+              justifyContent: 'space-between',
+              gap: 'var(--space-3)',
+              borderTop: '1px solid var(--color-border)'
+            }}
+          >
+            <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', fontSize: 'var(--text-sm)', fontWeight: 700, color: 'var(--color-primary)' }}>
+              <span>📍 Knosou 11, 11253 Athens (Amerikis Square & Agiou Nikolaou)</span>
+            </div>
+            <div style={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap' }}>
+              <span className="badge badge-accent">Halal Indonesia Certified</span>
+              <span className="badge badge-primary">Wholesale & Retail (Χονδρική & Λιανική)</span>
+              <span className="badge badge-stock">📞 +30 2110014955 / +30 694 6161076</span>
+            </div>
+          </div>
+        </div>
+
         {/* Core Pillars */}
         <div style={{ marginBottom: 'var(--space-16)' }}>
           <SectionHeading
             eyebrow="What We Stand For"
             title="Our Focus & Commitment"
-            description="We bridge distances by making genuine Indonesian groceries convenient and accessible."
+            description="We bridge culinary traditions by making genuine Asian grocery favorites convenient and accessible."
             centered={true}
           />
 
@@ -137,9 +187,9 @@ export default function About() {
               >
                 <ShieldCheck size={26} />
               </div>
-              <h3 style={{ fontSize: '1.2rem', fontWeight: 800 }}>100% Authentic Indonesian Brands</h3>
+              <h3 style={{ fontSize: '1.2rem', fontWeight: 800 }}>100% Authentic Asian Brands</h3>
               <p style={{ fontSize: 'var(--text-sm)', color: 'var(--color-text-secondary)', lineHeight: 1.6 }}>
-                Every package on our shelves is genuinely manufactured in Indonesia. We carry staple brands that families have loved for generations, including Indomie, Bango, ABC, Roma, Finna, and Kapal Api.
+                Every item on our shelves is verified and authentic. We carry legendary brands across Asia including Indomie, Samyang Buldak, Nongshim Shin Ramyun, Bango, ABC, Aroy-D, Flying Goose, Kokita, and Longkou Dragon Brand.
               </p>
             </div>
 
@@ -171,9 +221,9 @@ export default function About() {
               >
                 <Globe2 size={26} />
               </div>
-              <h3 style={{ fontSize: '1.2rem', fontWeight: 800 }}>For Locals & Diaspora Alike</h3>
+              <h3 style={{ fontSize: '1.2rem', fontWeight: 800 }}>Celebrating Diverse Asian Cuisines</h3>
               <p style={{ fontSize: 'var(--text-sm)', color: 'var(--color-text-secondary)', lineHeight: 1.6 }}>
-                Whether you know exactly what bumbu you need for weekend Rendang or you are trying fried noodles (Mi Goreng) for the first time, our catalog is welcoming, accessible, and clearly organized.
+                From rich Indonesian Rendang pastes and fiery sambals to Korean Jajangmyeon, Thai Tom Yum curries, and glass vermicelli, our curated catalog unites the rich culinary diversity of Asia under one roof.
               </p>
             </div>
 
@@ -205,9 +255,9 @@ export default function About() {
               >
                 <Utensils size={26} />
               </div>
-              <h3 style={{ fontSize: '1.2rem', fontWeight: 800 }}>Full Culinary Essentials</h3>
+              <h3 style={{ fontSize: '1.2rem', fontWeight: 800 }}>Full Culinary & Pantry Essentials</h3>
               <p style={{ fontSize: 'var(--text-sm)', color: 'var(--color-text-secondary)', lineHeight: 1.6 }}>
-                From quick instant foods to complex aromatic pastes, galangal, candlenuts, shrimp paste (terasi), and fragrant Jasmine teas, we ensure your pantry is fully stocked with real Indonesian flavor.
+                From comforting instant noodles and crispy cassava chips to aged single-clove black garlic, coconut milks, marinades, and soothing jasmine teas, we ensure your Asian home kitchen is fully supplied.
               </p>
             </div>
           </div>
@@ -217,8 +267,8 @@ export default function About() {
         <div style={{ marginBottom: 'var(--space-12)' }}>
           <SectionHeading
             eyebrow="Carefully Selected"
-            title="What You Will Find at Toko Aysha"
-            description="Our physical store covers eight core categories to fulfill everyday cooking and snacking needs."
+            title="What You Will Find at Toko Aysha Asian Market"
+            description="Our physical store covers eight core categories to fulfill your everyday Asian cooking and snacking needs."
           />
 
           <div 
@@ -292,10 +342,10 @@ export default function About() {
           }}
         >
           <h2 style={{ fontSize: 'clamp(1.75rem, 3vw, 2.2rem)', fontWeight: 800, color: '#FFFFFF', marginBottom: 'var(--space-3)' }}>
-            Experience Toko Aysha In Person
+            Experience Toko Aysha Asian Market In Person
           </h2>
-          <p style={{ fontSize: 'var(--text-base)', color: 'rgba(255, 255, 255, 0.85)', maxWidth: '560px', margin: '0 auto var(--space-6)' }}>
-            Discover nostalgic childhood favorites and explore authentic Indonesian tastes. Plan your visit to our physical supermarket today.
+          <p style={{ fontSize: 'var(--text-base)', color: 'rgba(255, 255, 255, 0.85)', maxWidth: '580px', margin: '0 auto var(--space-6)' }}>
+            Discover nostalgic comfort foods, fiery ramyun, specialty sauces, and authentic Asian cooking staples. Plan your visit to our physical supermarket today.
           </p>
           <Link to="/visit-us" className="btn btn-lg" style={{ backgroundColor: '#FFFFFF', color: 'var(--color-accent)', fontWeight: 800 }}>
             <Store size={18} />

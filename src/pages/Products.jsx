@@ -15,11 +15,13 @@ export default function Products() {
 
   // Read URL query parameters
   const initialCategory = searchParams.get('category') || 'all';
+  const initialOrigin = searchParams.get('origin') || 'all';
   const initialSearch = searchParams.get('search') || '';
   const initialBrand = searchParams.get('brand') || 'all';
   const initialSort = searchParams.get('sort') || 'featured';
 
   const [category, setCategory] = useState(initialCategory);
+  const [origin, setOrigin] = useState(initialOrigin);
   const [searchQuery, setSearchQuery] = useState(initialSearch);
   const [brand, setBrand] = useState(initialBrand);
   const [sortBy, setSortBy] = useState(initialSort);
@@ -29,11 +31,13 @@ export default function Products() {
   // Sync state with URL params when URL changes
   useEffect(() => {
     const cat = searchParams.get('category') || 'all';
+    const orig = searchParams.get('origin') || 'all';
     const s = searchParams.get('search') || '';
     const b = searchParams.get('brand') || 'all';
     const st = searchParams.get('sort') || 'featured';
 
     setCategory(cat);
+    setOrigin(orig);
     setSearchQuery(s);
     setBrand(b);
     setSortBy(st);
@@ -59,6 +63,13 @@ export default function Products() {
     updateUrlParams({ category: catId });
   };
 
+  // Handle Origin Select
+  const handleSelectOrigin = (origId) => {
+    setOrigin(origId);
+    setVisibleCount(ITEMS_PER_PAGE);
+    updateUrlParams({ origin: origId });
+  };
+
   // Handle Brand Select
   const handleSelectBrand = (brandName) => {
     setBrand(brandName);
@@ -82,6 +93,7 @@ export default function Products() {
   // Reset All Filters
   const handleResetFilters = () => {
     setCategory('all');
+    setOrigin('all');
     setSearchQuery('');
     setBrand('all');
     setSortBy('featured');
@@ -89,33 +101,56 @@ export default function Products() {
     setSearchParams({}, { replace: true });
   };
 
-  // Available unique brands derived from current category or whole catalog
+  // Available unique brands derived from current category and origin
   const availableBrands = useMemo(() => {
-    const filteredByCategory = category === 'all' 
-      ? products 
-      : products.filter(p => p.category === category);
-    const unique = [...new Set(filteredByCategory.map(p => p.brand))].sort();
+    let pool = products;
+    if (category !== 'all') {
+      pool = pool.filter(p => p.category === category);
+    }
+    if (origin !== 'all') {
+      if (origin.toLowerCase() === 'imported' || origin.toLowerCase() === 'non-indonesia') {
+        pool = pool.filter(p => p.origin && !p.origin.toLowerCase().includes('indonesia'));
+      } else if (origin.toLowerCase() === 'indonesia') {
+        pool = pool.filter(p => p.origin && p.origin.toLowerCase().includes('indonesia'));
+      } else {
+        pool = pool.filter(p => p.origin && p.origin.toLowerCase().includes(origin.toLowerCase()));
+      }
+    }
+    const unique = [...new Set(pool.map(p => p.brand))].sort();
     return unique;
-  }, [category]);
+  }, [category, origin]);
 
   // Filter and Sort Products
   const filteredProducts = useMemo(() => {
     return products.filter((item) => {
-      // 1. Category Filter
+      // 1. Origin Filter
+      let matchOrigin = true;
+      if (origin !== 'all') {
+        if (origin.toLowerCase() === 'imported' || origin.toLowerCase() === 'non-indonesia') {
+          matchOrigin = Boolean(item.origin && !item.origin.toLowerCase().includes('indonesia'));
+        } else if (origin.toLowerCase() === 'indonesia') {
+          matchOrigin = Boolean(item.origin && item.origin.toLowerCase().includes('indonesia'));
+        } else {
+          matchOrigin = Boolean(item.origin && item.origin.toLowerCase().includes(origin.toLowerCase()));
+        }
+      }
+
+      // 2. Category Filter
       const matchCategory = category === 'all' || item.category === category;
 
-      // 2. Brand Filter
+      // 3. Brand Filter
       const matchBrand = brand === 'all' || item.brand === brand;
 
-      // 3. Search Filter (name, brand, description, origin)
+      // 4. Search Filter (name, brand, description, origin, packageSize)
       const q = searchQuery.toLowerCase().trim();
       const matchSearch = !q || 
         item.name.toLowerCase().includes(q) ||
         item.brand.toLowerCase().includes(q) ||
         item.description.toLowerCase().includes(q) ||
+        (item.origin && item.origin.toLowerCase().includes(q)) ||
         (item.packageSize && item.packageSize.toLowerCase().includes(q));
 
-      return matchCategory && matchBrand && matchSearch;
+      return matchOrigin && matchCategory && matchBrand && matchSearch;
     }).sort((a, b) => {
       if (sortBy === 'featured') {
         return (b.featured ? 1 : 0) - (a.featured ? 1 : 0);
@@ -131,7 +166,7 @@ export default function Products() {
       }
       return 0;
     });
-  }, [category, brand, searchQuery, sortBy]);
+  }, [category, origin, brand, searchQuery, sortBy]);
 
   // Paginated/Sliced subset
   const displayedProducts = filteredProducts.slice(0, visibleCount);
@@ -139,7 +174,37 @@ export default function Products() {
 
   const currentCategoryObj = categories.find(c => c.id === category);
 
-  const hasActiveFilters = category !== 'all' || brand !== 'all' || Boolean(searchQuery.trim());
+  const hasActiveFilters = category !== 'all' || origin !== 'all' || brand !== 'all' || Boolean(searchQuery.trim());
+
+  // Dynamic Page Title & Description
+  const getPageTitle = () => {
+    if (currentCategoryObj && origin !== 'all') {
+      const origLabel = origin === 'imported' ? 'Asian Imports' : origin;
+      return `${currentCategoryObj.name} — ${origLabel}`;
+    }
+    if (currentCategoryObj) return currentCategoryObj.name;
+    if (origin === 'imported') return 'Asian Market Imports';
+    if (origin === 'Indonesia') return 'Indonesian Groceries';
+    if (origin !== 'all') return `${origin} Specialties`;
+    return 'Asian Grocery Catalog';
+  };
+
+  const getPageDescription = () => {
+    if (currentCategoryObj && origin === 'imported') {
+      return `Explore ${currentCategoryObj.name.toLowerCase()} imported from South Korea, Thailand, China, and across Asia.`;
+    }
+    if (currentCategoryObj) return currentCategoryObj.description;
+    if (origin === 'imported') {
+      return 'Explore our curated collection of authentic grocery favorites imported from South Korea, Thailand, China, and across Asia.';
+    }
+    if (origin === 'Indonesia') {
+      return 'Discover authentic Indonesian favorites — from Indomie Mi Goreng and Sambal ABC to Bango sweet soy sauce and regional snacks.';
+    }
+    if (origin !== 'all') {
+      return `Browse authentic grocery essentials and specialties from ${origin}.`;
+    }
+    return 'Browse our complete catalog of 145 authentic Asian groceries, instant noodles, sauces, snacks, and cooking ingredients.';
+  };
 
   return (
     <div className="products-page section" style={{ backgroundColor: 'var(--color-bg)', minHeight: '80vh' }}>
@@ -148,49 +213,132 @@ export default function Products() {
         <Breadcrumb 
           items={[
             { label: 'Products', path: '/products' },
+            ...(origin !== 'all' ? [{ label: origin === 'imported' ? 'Asian Imports' : origin, path: `/products?origin=${origin}` }] : []),
             ...(currentCategoryObj ? [{ label: currentCategoryObj.name }] : [])
           ]}
         />
 
-        {/* Page Title & Search Header */}
+        {/* Asian Grocer Catalogue Banner Hero Card with Official Banner Background */}
         <div 
+          className="catalog-banner-hero"
           style={{
-            display: 'flex',
-            alignItems: 'flex-start',
-            justifyContent: 'space-between',
-            flexWrap: 'wrap',
-            gap: 'var(--space-6)',
-            marginBottom: 'var(--space-6)'
+            position: 'relative',
+            borderRadius: 'var(--radius-xl)',
+            overflow: 'hidden',
+            marginBottom: 'var(--space-8)',
+            border: '1.5px solid var(--color-border)',
+            boxShadow: 'var(--shadow-md)',
+            backgroundImage: "linear-gradient(135deg, rgba(255, 255, 255, 0.94) 0%, rgba(255, 255, 255, 0.88) 48%, rgba(255, 255, 255, 0.72) 100%), url('/images/brand/banner.jpg')",
+            backgroundSize: 'cover',
+            backgroundPosition: 'center right',
+            padding: 'clamp(1.5rem, 3.5vw, 2.5rem)'
           }}
         >
-          <div>
-            <h1 
+          {/* Official Banner Verification Badges */}
+          <div style={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center', gap: '0.5rem', marginBottom: 'var(--space-3)' }}>
+            <span 
               style={{
-                fontSize: 'clamp(2rem, 3.5vw, 2.75rem)',
+                display: 'inline-flex',
+                alignItems: 'center',
+                gap: '0.4rem',
+                backgroundColor: 'var(--color-primary)',
+                color: '#FFFFFF',
+                padding: '0.25rem 0.75rem',
+                borderRadius: 'var(--radius-full)',
+                fontSize: '0.72rem',
                 fontWeight: 800,
-                color: 'var(--color-text-main)',
-                lineHeight: 1.15,
-                letterSpacing: '-0.02em',
-                marginBottom: '0.4rem'
+                letterSpacing: '0.05em',
+                textTransform: 'uppercase'
               }}
             >
-              {currentCategoryObj ? currentCategoryObj.name : 'Our Products'}
-            </h1>
-            <p style={{ fontSize: 'var(--text-base)', color: 'var(--color-text-secondary)', maxWidth: '580px' }}>
-              {currentCategoryObj 
-                ? currentCategoryObj.description 
-                : 'Browse our complete catalog of authentic Indonesian groceries, snacks, noodles, sambals, and pantry essentials.'}
-            </p>
+              TA TOKO AYSHA • ASIAN MARKET
+            </span>
+            <span 
+              style={{
+                display: 'inline-flex',
+                alignItems: 'center',
+                gap: '0.35rem',
+                backgroundColor: 'rgba(255, 255, 255, 0.92)',
+                color: 'var(--color-accent)',
+                padding: '0.25rem 0.65rem',
+                borderRadius: 'var(--radius-full)',
+                fontSize: '0.72rem',
+                fontWeight: 700,
+                border: '1px solid var(--color-border)'
+              }}
+            >
+              Halal Indonesia Certified
+            </span>
+            <span 
+              style={{
+                display: 'inline-flex',
+                alignItems: 'center',
+                gap: '0.35rem',
+                backgroundColor: 'rgba(255, 255, 255, 0.92)',
+                color: 'var(--color-text-secondary)',
+                padding: '0.25rem 0.65rem',
+                borderRadius: 'var(--radius-full)',
+                fontSize: '0.72rem',
+                fontWeight: 600,
+                border: '1px solid var(--color-border)'
+              }}
+            >
+              📍 Knosou 11, Athens, Greece
+            </span>
+            <span 
+              style={{
+                display: 'inline-flex',
+                alignItems: 'center',
+                gap: '0.35rem',
+                backgroundColor: 'rgba(255, 255, 255, 0.92)',
+                color: 'var(--color-text-secondary)',
+                padding: '0.25rem 0.65rem',
+                borderRadius: 'var(--radius-full)',
+                fontSize: '0.72rem',
+                fontWeight: 600,
+                border: '1px solid var(--color-border)'
+              }}
+            >
+              Χονδρική & Λιανική (Wholesale & Retail)
+            </span>
           </div>
 
-          {/* Search bar inside products page */}
-          <div style={{ width: '100%', maxWidth: '380px' }}>
-            <SearchBar
-              initialValue={searchQuery}
-              onSearch={handleSearch}
-              placeholder="Filter by name, brand, or flavor..."
-              variant="catalog"
-            />
+          <div 
+            style={{
+              display: 'flex',
+              alignItems: 'flex-start',
+              justifyContent: 'space-between',
+              flexWrap: 'wrap',
+              gap: 'var(--space-6)'
+            }}
+          >
+            <div style={{ maxWidth: '640px' }}>
+              <h1 
+                style={{
+                  fontSize: 'clamp(2rem, 3.5vw, 2.75rem)',
+                  fontWeight: 800,
+                  color: 'var(--color-primary)',
+                  lineHeight: 1.15,
+                  letterSpacing: '-0.02em',
+                  marginBottom: '0.45rem'
+                }}
+              >
+                {getPageTitle()}
+              </h1>
+              <p style={{ fontSize: 'var(--text-base)', color: 'var(--color-text-main)', lineHeight: 1.55 }}>
+                {getPageDescription()}
+              </p>
+            </div>
+
+            {/* Search bar inside products page */}
+            <div style={{ width: '100%', maxWidth: '380px' }}>
+              <SearchBar
+                initialValue={searchQuery}
+                onSearch={handleSearch}
+                placeholder="Search name, brand, origin, or flavor..."
+                variant="catalog"
+              />
+            </div>
           </div>
         </div>
 
@@ -198,6 +346,8 @@ export default function Products() {
         <ProductFilters
           selectedCategory={category}
           onSelectCategory={handleSelectCategory}
+          selectedOrigin={origin}
+          onSelectOrigin={handleSelectOrigin}
           selectedBrand={brand}
           onSelectBrand={handleSelectBrand}
           sortBy={sortBy}

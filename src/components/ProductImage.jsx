@@ -24,11 +24,11 @@ const CATEGORY_ICONS = {
 };
 
 const CATEGORY_COLORS = {
-  'instant-noodles': { bg: '#FDF0ED', accent: '#C7462B' },
+  'instant-noodles': { bg: '#FAF2F3', accent: '#7B111A' },
   'rice-pantry-staples': { bg: '#FDF5ED', accent: '#C77D2B' },
   'snacks-biscuits': { bg: '#FEF7EE', accent: '#D97706' },
-  'sauces-seasonings': { bg: '#FDF1EE', accent: '#C7462B' },
-  'drinks-beverages': { bg: '#EDF3EF', accent: '#28523C' },
+  'sauces-seasonings': { bg: '#FAF2F3', accent: '#7B111A' },
+  'drinks-beverages': { bg: '#EDF7F1', accent: '#1B6839' },
   'cooking-ingredients': { bg: '#F5F3FF', accent: '#7C3AED' },
   'canned-packaged-food': { bg: '#F0F9FF', accent: '#0284C7' },
   'household-essentials': { bg: '#ECFDF5', accent: '#059669' },
@@ -45,7 +45,7 @@ export default function ProductImage({ product, className = '', aspectRatio = '1
   const categoryId = product?.category || 'instant-noodles';
   const categoryConfig = categories.find(c => c.id === categoryId);
   const IconComponent = CATEGORY_ICONS[categoryId] || ShoppingBag;
-  const colorScheme = CATEGORY_COLORS[categoryId] || { bg: '#F7F3EA', accent: '#C7462B' };
+  const colorScheme = CATEGORY_COLORS[categoryId] || { bg: '#FAF7F2', accent: '#7B111A' };
 
   // If user provided a working image path and no error occurred yet
   if (product?.image && !hasError) {

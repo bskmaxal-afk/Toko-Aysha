@@ -215,17 +215,20 @@ export default function StoreInfo({ compact = false }) {
             border: '1px solid var(--color-border)'
           }}
         >
-          {/* Map / Storefront Graphical Area */}
+          {/* Map / Storefront Graphical Area with Store Banner */}
           <div 
             style={{
               position: 'relative',
-              backgroundColor: '#E8EDE9',
+              backgroundColor: '#FAF5F5',
               minHeight: '280px',
               flex: 1,
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
-              padding: 'var(--space-6)'
+              padding: 'var(--space-6)',
+              backgroundImage: "linear-gradient(135deg, rgba(255, 255, 255, 0.92) 0%, rgba(255, 255, 255, 0.85) 100%), url('/images/brand/banner.jpg')",
+              backgroundSize: 'cover',
+              backgroundPosition: 'center'
             }}
           >
             {/* Clean Simulated Supermarket Map UI */}
@@ -233,9 +236,9 @@ export default function StoreInfo({ compact = false }) {
               style={{
                 width: '100%',
                 height: '100%',
-                backgroundColor: '#FFFFFF',
+                backgroundColor: 'rgba(255, 255, 255, 0.95)',
                 borderRadius: 'var(--radius-lg)',
-                border: '1px solid #D1DDD3',
+                border: '1px solid var(--color-border)',
                 padding: 'var(--space-6)',
                 position: 'relative',
                 display: 'flex',
@@ -251,8 +254,8 @@ export default function StoreInfo({ compact = false }) {
                 style={{
                   position: 'absolute',
                   inset: 0,
-                  opacity: 0.35,
-                  backgroundImage: 'radial-gradient(#28523C 1px, transparent 1px)',
+                  opacity: 0.25,
+                  backgroundImage: 'radial-gradient(var(--color-primary) 1px, transparent 1px)',
                   backgroundSize: '20px 20px'
                 }}
               />
@@ -270,7 +273,7 @@ export default function StoreInfo({ compact = false }) {
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'center',
-                  boxShadow: '0 8px 20px rgba(199, 70, 43, 0.4)',
+                  boxShadow: '0 8px 20px rgba(123, 17, 26, 0.4)',
                   marginBottom: 'var(--space-3)',
                   animation: 'bounce 2s infinite'
                 }}
@@ -284,7 +287,7 @@ export default function StoreInfo({ compact = false }) {
                 </h4>
                 <p style={{ fontSize: 'var(--text-xs)', color: 'var(--color-text-secondary)', maxWidth: '280px' }}>
                   {location.isConfigured 
-                    ? location.addressLine1 
+                    ? `${location.addressLine1}, ${location.addressLine2}, ${location.city} ${location.postalCode}, ${location.country}`
                     : "Centralized location easily accessible for customers seeking authentic Indonesian products."}
                 </p>
               </div>

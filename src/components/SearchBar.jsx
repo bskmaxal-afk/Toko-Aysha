@@ -91,7 +91,7 @@ export default function SearchBar({
         onFocus={(e) => {
           e.target.style.borderColor = 'var(--color-primary)';
           e.target.style.backgroundColor = '#FFFFFF';
-          e.target.style.boxShadow = '0 0 0 3px rgba(199, 70, 43, 0.12)';
+          e.target.style.boxShadow = '0 0 0 3px rgba(123, 17, 26, 0.15)';
         }}
         onBlur={(e) => {
           e.target.style.borderColor = 'var(--color-border)';

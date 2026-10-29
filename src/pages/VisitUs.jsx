@@ -43,7 +43,7 @@ export default function VisitUs() {
             Visit {storeName} In Person
           </h1>
           <p style={{ fontSize: 'var(--text-base)', color: 'var(--color-text-secondary)', lineHeight: 1.6 }}>
-            Browse aisles of authentic Indonesian instant noodles, snacks, fresh herbs, spices, and household essentials. Find our location, view detailed daily hours, and plan your visit.
+            Browse aisles of authentic Asian and Indonesian instant noodles, snacks, coconut milks, sauces, curry pastes, and household essentials. Find our location, view detailed daily hours, and plan your visit.
           </p>
         </div>
 
@@ -77,7 +77,7 @@ export default function VisitUs() {
             </div>
 
             <p style={{ fontSize: 'var(--text-sm)', color: 'var(--color-text-secondary)', marginBottom: 'var(--space-6)' }}>
-              Our doors are open throughout the week to help you get your Indonesian culinary staples.
+              Our doors are open throughout the week to help you get your favorite Asian culinary staples.
             </p>
 
             <div style={{ display: 'flex', flexDirection: 'column', gap: '0.65rem' }}>
@@ -160,7 +160,7 @@ export default function VisitUs() {
                   <div>
                     <h4 style={{ fontSize: '0.95rem', fontWeight: 700, marginBottom: '0.15rem' }}>Bulk & Box Purchases</h4>
                     <p style={{ fontSize: 'var(--text-xs)', color: 'var(--color-text-secondary)', lineHeight: 1.5 }}>
-                      Instant noodles (Indomie and Mie Sedaap) and Teh Botol Sosro are readily available in whole carton boxes upon request.
+                      Instant noodles (Indomie, Samyang Buldak, Shin Ramyun) and bottled teas are readily available in whole carton boxes upon request.
                     </p>
                   </div>
                 </div>

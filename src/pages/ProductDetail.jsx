@@ -13,7 +13,7 @@ import {
 } from 'lucide-react';
 import Breadcrumb from '../components/Breadcrumb';
 import ProductImage from '../components/ProductImage';
-import ProductCard from '../components/ProductCard';
+import ProductCard, { getCountryFlag } from '../components/ProductCard';
 import ProductDetailModal from '../components/ProductDetailModal';
 import { products } from '../data/products';
 import { categories } from '../data/categories';
@@ -205,7 +205,7 @@ export default function ProductDetail() {
                 {/* Subtitle spec */}
                 <p style={{ fontSize: 'var(--text-sm)', color: 'var(--color-text-secondary)', marginBottom: 'var(--space-6)' }}>
                   Net Packaging: <strong style={{ color: 'var(--color-text-main)' }}>{product.packageSize}</strong>
-                  {product.origin && ` • Country of Origin: ${product.origin}`}
+                  {product.origin && ` • ${getCountryFlag(product.origin)} Country of Origin: ${product.origin}`}
                 </p>
 
                 {/* Pricing Block */}

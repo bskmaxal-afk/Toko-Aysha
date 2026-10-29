@@ -13,7 +13,7 @@ export default function AnnouncementBar() {
     <div 
       className="announcement-bar"
       style={{
-        backgroundColor: 'var(--color-accent)',
+        backgroundColor: 'var(--color-primary)',
         color: 'var(--color-text-inverse)',
         fontSize: 'var(--text-xs)',
         fontWeight: 600,

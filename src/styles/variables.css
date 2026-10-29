@@ -1,32 +1,32 @@
 :root {
-  /* Brand Color Palette */
-  --color-primary: #C7462B;           /* Brick Red */
-  --color-primary-hover: #AF3A22;     /* Deeper Brick Red */
-  --color-primary-light: #FDF1EE;     /* Soft red tint */
-  --color-primary-subtle: #F9E1DC;
+  /* Brand Color Palette - Inspired by Toko Aysha Official Logo & Banner */
+  --color-primary: #7B111A;           /* Deep Burgundy / Maroon (from monogram logo) */
+  --color-primary-hover: #5E0D14;     /* Rich Dark Wine */
+  --color-primary-light: #FBF2F3;     /* Soft rose/maroon tinted cream */
+  --color-primary-subtle: #F3DADB;    /* Subtle maroon tint for pills/borders */
 
-  --color-bg: #F7F3EA;                /* Warm Cream */
-  --color-bg-alt: #EFE9DC;            /* Slightly deeper cream */
+  --color-bg: #FAF7F2;                /* Warm Asian Market Cream */
+  --color-bg-alt: #F2ECE2;            /* Warm Neutral Stone */
   --color-surface: #FFFFFF;           /* Pure White */
-  --color-surface-soft: #FCFAF6;      /* Off-white */
+  --color-surface-soft: #FDFBF8;      /* Off-white */
 
-  --color-accent: #28523C;            /* Deep Green */
-  --color-accent-hover: #1E3E2D;      /* Darker Green */
-  --color-accent-light: #EDF3EF;      /* Subtle Green Tint */
+  --color-accent: #9A6F24;            /* Antique Warm Gold (from banner cloud border & batik) */
+  --color-accent-hover: #7E5718;      /* Darker Antique Gold */
+  --color-accent-light: #FAF4E8;      /* Subtle Ivory Gold Tint */
 
-  --color-text-main: #242424;         /* Charcoal text */
-  --color-text-secondary: #707070;    /* Muted gray */
-  --color-text-light: #9B9B9B;        /* Light muted */
+  --color-text-main: #221819;         /* Deep Warm Charcoal with maroon undertone */
+  --color-text-secondary: #685A5B;    /* Muted warm gray */
+  --color-text-light: #9E9091;        /* Light muted */
   --color-text-inverse: #FFFFFF;      /* White text */
 
-  --color-border: #E8E4DC;            /* Light gray-cream border */
-  --color-border-hover: #D5CEBF;
-  --color-divider: #ECE8E0;
+  --color-border: #E8E0D6;            /* Soft warm border */
+  --color-border-hover: #D4C7B8;
+  --color-divider: #EDE5DA;
 
   /* Status Colors */
-  --color-in-stock: #28523C;
-  --color-in-stock-bg: #EDF3EF;
-  --color-warning: #D97706;
+  --color-in-stock: #1B6839;          /* Fresh Jade Green */
+  --color-in-stock-bg: #EDF7F1;
+  --color-warning: #C26308;
   --color-warning-bg: #FEF3C7;
 
   /* Typography */

@@ -1,80 +1,78 @@
 /**
- * TOKO AYSHA — CENTRAL STORE CONFIGURATION
+ * TOKO AYSHA ASIAN MARKET — CENTRAL STORE CONFIGURATION
  * 
- * Update this file with your actual store location, business hours,
- * contact info, and pricing configuration once finalized.
- * 
- * Strict Guideline: No fictional addresses, phone numbers, or prices
- * are shown to visitors until configured below.
+ * Centralized store identity, location, operating hours,
+ * contact details, and catalog configuration.
+ * Officially verified from Athens store banner.
  */
 
 export const storeConfig = {
   // Store Branding & Identity
-  storeName: "Toko Aysha",
-  tagline: "Authentic Indonesian Groceries & Market",
-  shortDescription: "Your trusted destination for authentic Indonesian instant noodles, pantry staples, sambal, snacks, and daily household essentials abroad.",
+  storeName: "Toko Aysha Asian Market",
+  shortName: "Toko Aysha",
+  tagline: "Authentic Asian & Indonesian Groceries • Wholesale & Retail",
+  shortDescription: "Your premier destination in Athens for authentic Asian and Indonesian groceries. Featuring specialty foods, instant noodles, pantry staples, snacks, sauces, and culinary essentials from Indonesia, South Korea, Thailand, China, and across Asia.",
+  businessType: "Wholesale & Retail Sales (Χονδρική & Λιανική Πώληση)",
+  certification: "Halal Indonesia Certified",
   
   // Top Announcement Bar
   announcement: {
     enabled: true,
-    message: "Discover authentic Indonesian groceries, snacks & everyday essentials.",
-    linkText: "Explore Products",
-    linkUrl: "/products"
+    message: "Toko Aysha Asian Market — Wholesale & Retail Sales (Χονδρική & Λιανική Πώληση) • Knosou 11, Athens, Greece",
+    linkText: "Explore Asian Imports",
+    linkUrl: "/products?origin=imported"
   },
 
-  // Physical Store Location
-  // Set isConfigured to true when exact store address is confirmed
+  // Physical Store Location - Official Banner Verified (Amerikis Square & Agiou Nikolaou)
   location: {
-    isConfigured: false,
-    addressLine1: "Store location to be announced",
-    addressLine2: "Overseas Indonesian Market",
-    city: "",
-    country: "",
-    postalCode: "",
-    displayPlaceholder: "Physical store address will be published soon. Please contact us for directions.",
-    // Google Maps embed URL or search link (leave empty or set when confirmed)
-    googleMapsUrl: "",
-    directionsUrl: ""
+    isConfigured: true,
+    addressLine1: "Knosou 11",
+    addressLine2: "Amerikis Square & Agiou Nikolaou",
+    city: "Athens",
+    country: "Greece",
+    postalCode: "11253",
+    displayPlaceholder: "Knosou 11, 11253 Athens (Amerikis Square & Agiou Nikolaou), Greece",
+    googleMapsUrl: "https://www.google.com/maps/search/?api=1&query=Knosou+11+11253+Athens+Greece",
+    directionsUrl: "https://www.google.com/maps/dir/?api=1&destination=Knosou+11+11253+Athens+Greece"
   },
 
-  // Contact Information
+  // Contact Information - Official Banner Verified
   contact: {
-    isConfigured: false,
-    phone: "",
-    phonePlaceholder: "Phone inquiry available upon opening",
+    isConfigured: true,
+    phone: "+30 2110014955",
+    whatsapp: "+30 694 6161076",
+    mobile: "+30 694 6161076",
+    phonePlaceholder: "+30 2110014955 / +30 694 6161076",
     email: "contact@tokoaysha.com",
-    whatsapp: "",
   },
 
   // Operating Hours
-  // Clean default structure; set isConfigured to true once confirmed
   operatingHours: {
-    isConfigured: false,
-    note: "Official opening hours will be announced prior to store launch.",
+    isConfigured: true,
+    note: "Open for wholesale & retail customers. Contact us or visit our store in Amerikis Square, Athens.",
     schedule: [
-      { day: "Monday", hours: "10:00 AM – 7:00 PM" },
-      { day: "Tuesday", hours: "10:00 AM – 7:00 PM" },
-      { day: "Wednesday", hours: "10:00 AM – 7:00 PM" },
-      { day: "Thursday", hours: "10:00 AM – 7:00 PM" },
-      { day: "Friday", hours: "10:00 AM – 8:00 PM" },
-      { day: "Saturday", hours: "10:00 AM – 8:00 PM" },
+      { day: "Monday", hours: "10:00 AM – 8:00 PM" },
+      { day: "Tuesday", hours: "10:00 AM – 8:00 PM" },
+      { day: "Wednesday", hours: "10:00 AM – 8:00 PM" },
+      { day: "Thursday", hours: "10:00 AM – 8:00 PM" },
+      { day: "Friday", hours: "10:00 AM – 8:30 PM" },
+      { day: "Saturday", hours: "10:00 AM – 8:30 PM" },
       { day: "Sunday", hours: "11:00 AM – 6:00 PM" }
     ]
   },
 
-  // Pricing & Inventory Settings
-  // In accordance with guidelines: No made-up prices.
+  // Pricing & Inventory Settings (Athens, Greece uses EUR €)
   pricing: {
-    hasLivePrices: false, // Set to true when prices are confirmed
-    currencySymbol: "$",
-    currencyCode: "USD",
+    hasLivePrices: false,
+    currencySymbol: "€",
+    currencyCode: "EUR",
     fallbackText: "Contact Store for Pricing"
   },
 
-  // Social Channels
+  // Social & Messaging Channels
   socials: {
+    whatsapp: "https://wa.me/306946161076",
     instagram: "",
-    facebook: "",
-    whatsapp: ""
+    facebook: ""
   }
 };

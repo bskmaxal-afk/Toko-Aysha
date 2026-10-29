@@ -3,11 +3,26 @@ import { Eye, Check } from 'lucide-react';
 import ProductImage from './ProductImage';
 import { formatPrice, hasLivePrice } from '../utils/formatPrice';
 
+export function getCountryFlag(origin) {
+  if (!origin) return '🌏';
+  const lower = origin.toLowerCase();
+  if (lower.includes('indonesia')) return '🇮🇩';
+  if (lower.includes('korea')) return '🇰🇷';
+  if (lower.includes('thai')) return '🇹🇭';
+  if (lower.includes('china')) return '🇨🇳';
+  if (lower.includes('sri lanka')) return '🇱🇰';
+  if (lower.includes('japan')) return '🇯🇵';
+  if (lower.includes('vietnam')) return '🇻🇳';
+  return '🌏';
+}
+
 export default function ProductCard({ product, onViewDetails }) {
   if (!product) return null;
 
   const showLivePrice = hasLivePrice(product.price);
   const priceDisplay = formatPrice(product.price);
+  const flag = getCountryFlag(product.origin);
+  const isImported = product.origin && !product.origin.toLowerCase().includes('indonesia');
 
   return (
     <article 
@@ -70,26 +85,48 @@ export default function ProductCard({ product, onViewDetails }) {
           {product.brand}
         </span>
 
-        {/* Featured Star / New Tag */}
-        {product.featured && (
-          <span 
-            style={{
-              position: 'absolute',
-              top: '10px',
-              right: '10px',
-              backgroundColor: 'var(--color-primary)',
-              color: '#FFFFFF',
-              fontSize: '0.65rem',
-              fontWeight: 800,
-              padding: '0.2rem 0.5rem',
-              borderRadius: 'var(--radius-full)',
-              letterSpacing: '0.04em',
-              textTransform: 'uppercase'
-            }}
-          >
-            Favorite
-          </span>
-        )}
+        {/* Origin / Flag Badge or Favorite Badge */}
+        <div style={{ position: 'absolute', top: '10px', right: '10px', display: 'flex', flexDirection: 'column', gap: '4px', alignItems: 'flex-end' }}>
+          {product.featured && (
+            <span 
+              style={{
+                backgroundColor: 'var(--color-primary)',
+                color: '#FFFFFF',
+                fontSize: '0.65rem',
+                fontWeight: 800,
+                padding: '0.2rem 0.5rem',
+                borderRadius: 'var(--radius-full)',
+                letterSpacing: '0.04em',
+                textTransform: 'uppercase'
+              }}
+            >
+              Favorite
+            </span>
+          )}
+
+          {product.origin && (
+            <span
+              title={`Origin: ${product.origin}`}
+              style={{
+                backgroundColor: isImported ? 'rgba(40, 82, 60, 0.92)' : 'rgba(255, 255, 255, 0.92)',
+                color: isImported ? '#FFFFFF' : 'var(--color-text-secondary)',
+                border: isImported ? 'none' : '1px solid var(--color-border)',
+                backdropFilter: 'blur(4px)',
+                fontSize: '0.68rem',
+                fontWeight: 700,
+                padding: '0.18rem 0.45rem',
+                borderRadius: 'var(--radius-full)',
+                display: 'inline-flex',
+                alignItems: 'center',
+                gap: '0.25rem',
+                boxShadow: '0 2px 4px rgba(0,0,0,0.06)'
+              }}
+            >
+              <span>{flag}</span>
+              <span>{product.origin}</span>
+            </span>
+          )}
+        </div>
       </div>
 
       {/* Product Info Content */}
@@ -103,7 +140,7 @@ export default function ProductCard({ product, onViewDetails }) {
         }}
       >
         <div>
-          {/* Packaging Size / Weight */}
+          {/* Packaging Size / Weight & In Store status */}
           <div 
             style={{
               display: 'flex',
