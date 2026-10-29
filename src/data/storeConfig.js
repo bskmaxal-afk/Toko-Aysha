@@ -23,7 +23,7 @@ export const storeConfig = {
     linkUrl: "/products?origin=imported"
   },
 
-  // Physical Store Location - Official Banner Verified (Amerikis Square & Agiou Nikolaou)
+  // Physical Store Location - Official Google Maps Verified Place (Amerikis Square & Agiou Nikolaou)
   location: {
     isConfigured: true,
     addressLine1: "Knosou 11",
@@ -32,18 +32,19 @@ export const storeConfig = {
     country: "Greece",
     postalCode: "11253",
     displayPlaceholder: "Knosou 11, 11253 Athens (Amerikis Square & Agiou Nikolaou), Greece",
-    googleMapsUrl: "https://www.google.com/maps/search/?api=1&query=Knosou+11+11253+Athens+Greece",
-    directionsUrl: "https://www.google.com/maps/dir/?api=1&destination=Knosou+11+11253+Athens+Greece"
+    googleMapsUrl: "https://www.google.com/maps/place/TOKO+AYSHA/@38.0061188,23.733767,17z/data=!3m1!4b1!4m6!3m5!1s0x14a1a35079e78b5d:0x66b8b59090c98bb1!8m2!3d38.0061188!4d23.733767!16s%2Fg%2F11w7d4j5x8",
+    directionsUrl: "https://www.google.com/maps/dir/?api=1&destination=TOKO+AYSHA,+Knosou+11,+11253+Athens+Greece&destination_place_id=ChIJXYvneVCjoRQRsbjJkJC1uGY",
+    embedUrl: "https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d3143.7573990176456!2d23.733767!3d38.0061188!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x14a1a35079e78b5d%3A0x66b8b59090c98bb1!2sTOKO%20AYSHA!5e0!3m2!1sid!2sid!4v1793259577660!5m2!1sid!2sid"
   },
 
-  // Contact Information - Official Banner Verified
+  // Contact Information - Official Banner & Store Verified
   contact: {
     isConfigured: true,
     phone: "+30 2110014955",
     whatsapp: "+30 694 6161076",
     mobile: "+30 694 6161076",
     phonePlaceholder: "+30 2110014955 / +30 694 6161076",
-    email: "contact@tokoaysha.com",
+    email: "shopaisha510@gmail.com",
   },
 
   // Operating Hours

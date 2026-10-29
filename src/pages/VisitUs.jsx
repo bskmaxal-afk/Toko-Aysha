@@ -189,7 +189,7 @@ export default function VisitUs() {
                 color: 'var(--color-text-secondary)'
               }}
             >
-              Have a special item request or looking for a specific regional ingredient? Send us a note at <strong>{contact.email}</strong>.
+              Have a special item request or looking for a specific regional ingredient? Send us a note at <a href={`mailto:${contact.email}`} style={{ fontWeight: 700, color: 'var(--color-primary)' }}>{contact.email}</a>.
             </div>
           </div>
         </div>

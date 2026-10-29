@@ -188,11 +188,17 @@ export default function Footer() {
                   <div style={{ fontSize: 'var(--text-sm)', fontWeight: 600, color: 'var(--color-text-main)' }}>
                     Physical Store
                   </div>
-                  <div style={{ fontSize: 'var(--text-xs)', color: 'var(--color-text-secondary)' }}>
+                  <a 
+                    href={storeConfig.location.googleMapsUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    style={{ fontSize: 'var(--text-xs)', color: 'var(--color-text-secondary)', textDecoration: 'none' }}
+                    title="Open TOKO AYSHA in Google Maps"
+                  >
                     {storeConfig.location.isConfigured 
-                      ? `${storeConfig.location.addressLine1}, ${storeConfig.location.city}` 
+                      ? `${storeConfig.location.addressLine1}, Amerikis Square, ${storeConfig.location.city}` 
                       : storeConfig.location.displayPlaceholder}
-                  </div>
+                  </a>
                 </div>
               </div>
 
@@ -216,9 +222,12 @@ export default function Footer() {
                   <div style={{ fontSize: 'var(--text-sm)', fontWeight: 600, color: 'var(--color-text-main)' }}>
                     Contact Email
                   </div>
-                  <div style={{ fontSize: 'var(--text-xs)', color: 'var(--color-text-secondary)' }}>
+                  <a 
+                    href={`mailto:${storeConfig.contact.email}`} 
+                    style={{ fontSize: 'var(--text-xs)', color: 'var(--color-text-secondary)', textDecoration: 'none' }}
+                  >
                     {storeConfig.contact.email}
-                  </div>
+                  </a>
                 </div>
               </div>
             </div>
