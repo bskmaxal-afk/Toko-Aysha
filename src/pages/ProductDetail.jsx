@@ -110,7 +110,7 @@ export default function ProductDetail() {
             {/* Left: Product Image Area */}
             <div 
               style={{
-                backgroundColor: category?.bgTint || 'var(--color-surface-soft)',
+                backgroundColor: '#FFFFFF',
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',

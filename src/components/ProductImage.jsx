@@ -56,10 +56,11 @@ export default function ProductImage({ product, className = '', aspectRatio = '1
           aspectRatio,
           position: 'relative',
           overflow: 'hidden',
-          backgroundColor: colorScheme.bg,
+          backgroundColor: '#FFFFFF',
           display: 'flex',
           alignItems: 'center',
-          justifyContent: 'center'
+          justifyContent: 'center',
+          padding: '1rem'
         }}
       >
         <img
@@ -71,7 +72,7 @@ export default function ProductImage({ product, className = '', aspectRatio = '1
             width: '100%',
             height: '100%',
             objectFit: 'contain',
-            padding: '0.75rem',
+            mixBlendMode: 'multiply',
             transition: 'transform 0.3s ease'
           }}
         />
@@ -87,8 +88,8 @@ export default function ProductImage({ product, className = '', aspectRatio = '1
         aspectRatio,
         position: 'relative',
         overflow: 'hidden',
-        backgroundColor: colorScheme.bg,
-        borderBottom: `2px solid ${colorScheme.accent}20`,
+        backgroundColor: '#F8FAFC',
+        borderBottom: '1px solid var(--color-border)',
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',

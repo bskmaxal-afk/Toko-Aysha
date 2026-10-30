@@ -110,7 +110,7 @@ export default function ProductDetailModal({ product, onClose }) {
           {/* Left Column: Image Area */}
           <div 
             style={{
-              backgroundColor: category?.bgTint || 'var(--color-bg)',
+              backgroundColor: '#FFFFFF',
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',

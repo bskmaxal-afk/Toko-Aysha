@@ -100,7 +100,7 @@ export default function Home() {
             title="Shop by Category"
             description="Explore our eight unified grocery categories spanning authentic Indonesian favorites and Asian imports."
             actionLink="/products"
-            actionText="View All 145 Products"
+            actionText={`View All ${products.length} Products`}
           />
           <CategoryGrid />
         </div>
@@ -275,7 +275,7 @@ export default function Home() {
                   boxShadow: '0 4px 14px rgba(0, 0, 0, 0.15)'
                 }}
               >
-                <span>Browse All 145 Products</span>
+                <span>Browse All {products.length} Products</span>
                 <ArrowRight size={18} />
               </Link>
             </div>
@@ -559,7 +559,7 @@ export default function Home() {
                 </div>
                 <h4 style={{ fontSize: '1rem', fontWeight: 800, marginBottom: '0.25rem' }}>Diverse Aisles</h4>
                 <p style={{ fontSize: 'var(--text-xs)', color: 'var(--color-text-secondary)' }}>
-                  145 carefully verified products spanning 8 supermarket grocery categories.
+                  {products.length} carefully verified products spanning 8 supermarket grocery categories.
                 </p>
               </div>
 

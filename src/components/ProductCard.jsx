@@ -16,6 +16,16 @@ export function getCountryFlag(origin) {
   return '🌏';
 }
 
+export function getProductSku(product) {
+  if (product.sku) return product.sku;
+  let hash = 0;
+  const str = product.id || product.name || 'sku';
+  for (let i = 0; i < str.length; i++) {
+    hash = (hash * 31 + str.charCodeAt(i)) % 9000;
+  }
+  return String(1000 + Math.abs(hash));
+}
+
 export default function ProductCard({ product, onViewDetails }) {
   if (!product) return null;
 
@@ -136,40 +146,81 @@ export default function ProductCard({ product, onViewDetails }) {
           display: 'flex',
           flexDirection: 'column',
           flexGrow: 1,
-          justifyContent: 'space-between'
+          justifyContent: 'space-between',
+          backgroundColor: '#FFFFFF'
         }}
       >
         <div>
-          {/* Packaging Size / Weight & In Store status */}
+          {/* Top Row: In Stock Green Pill Badge & Package size */}
           <div 
             style={{
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'space-between',
-              marginBottom: '0.25rem'
+              marginBottom: '0.45rem'
             }}
           >
             <span 
               style={{
-                fontSize: 'var(--text-xs)',
-                fontWeight: 600,
-                color: 'var(--color-text-secondary)'
+                backgroundColor: product.inStock !== false ? '#10B981' : '#94A3B8',
+                color: '#FFFFFF',
+                fontSize: '0.68rem',
+                fontWeight: 700,
+                padding: '0.2rem 0.65rem',
+                borderRadius: '9999px',
+                display: 'inline-flex',
+                alignItems: 'center',
+                gap: '0.25rem',
+                letterSpacing: '0.02em',
+                lineHeight: 1
               }}
             >
-              {product.packageSize || 'Standard Packaging'}
+              <Check size={11} strokeWidth={3} />
+              In Stock
+            </span>
+
+            {product.packageSize && (
+              <span 
+                style={{
+                  fontSize: '0.72rem',
+                  fontWeight: 600,
+                  color: 'var(--color-text-secondary)'
+                }}
+              >
+                {product.packageSize}
+              </span>
+            )}
+          </div>
+
+          {/* Price & SKU line — exactly matching the supplier catalog example */}
+          <div 
+            style={{
+              display: 'flex',
+              alignItems: 'baseline',
+              justifyContent: 'space-between',
+              marginBottom: '0.35rem'
+            }}
+          >
+            <span 
+              style={{
+                fontSize: '1.25rem',
+                fontWeight: 800,
+                color: showLivePrice ? 'var(--color-primary)' : '#475569',
+                letterSpacing: '-0.02em',
+                lineHeight: 1.2
+              }}
+            >
+              {showLivePrice ? priceDisplay : 'N/A'}
             </span>
             <span 
               style={{
-                fontSize: '0.68rem',
-                color: 'var(--color-accent)',
+                fontSize: '0.72rem',
                 fontWeight: 600,
-                display: 'inline-flex',
-                alignItems: 'center',
-                gap: '0.2rem'
+                color: '#94A3B8',
+                fontFamily: 'monospace'
               }}
             >
-              <Check size={12} strokeWidth={3} />
-              In Store
+              #{getProductSku(product)}
             </span>
           </div>
 
@@ -178,7 +229,7 @@ export default function ProductCard({ product, onViewDetails }) {
             onClick={() => onViewDetails(product)}
             title={product.name}
             style={{
-              fontSize: '0.98rem',
+              fontSize: '0.92rem',
               fontWeight: 700,
               color: 'var(--color-text-main)',
               lineHeight: 1.35,
@@ -188,14 +239,14 @@ export default function ProductCard({ product, onViewDetails }) {
               WebkitLineClamp: 2,
               WebkitBoxOrient: 'vertical',
               overflow: 'hidden',
-              minHeight: '2.6rem'
+              minHeight: '2.5rem'
             }}
           >
             {product.name}
           </h3>
         </div>
 
-        {/* Bottom Price & Action Row */}
+        {/* Bottom Price/Info & Action Row */}
         <div 
           style={{
             marginTop: 'var(--space-3)',
@@ -207,50 +258,32 @@ export default function ProductCard({ product, onViewDetails }) {
             gap: 'var(--space-2)'
           }}
         >
-          {/* Price status */}
-          <div style={{ flex: 1, minWidth: 0 }}>
-            {showLivePrice ? (
-              <span 
-                style={{
-                  fontSize: 'var(--text-base)',
-                  fontWeight: 800,
-                  color: 'var(--color-primary)'
-                }}
-              >
-                {priceDisplay}
-              </span>
-            ) : (
-              <span 
-                style={{
-                  fontSize: '0.72rem',
-                  fontWeight: 600,
-                  color: 'var(--color-text-secondary)',
-                  display: 'block',
-                  whiteSpace: 'nowrap',
-                  overflow: 'hidden',
-                  textOverflow: 'ellipsis'
-                }}
-              >
-                {priceDisplay}
-              </span>
-            )}
-          </div>
+          <span 
+            style={{
+              fontSize: '0.72rem',
+              color: 'var(--color-text-secondary)',
+              fontWeight: 600
+            }}
+          >
+            {product.brand}
+          </span>
 
           {/* View Details Button */}
           <button
             type="button"
             onClick={() => onViewDetails(product)}
-            className="btn btn-secondary btn-sm"
+            className="btn btn-outline btn-sm"
             aria-label={`View details for ${product.name}`}
             style={{
-              padding: '0.45rem 0.75rem',
-              fontSize: '0.78rem',
+              padding: '0.35rem 0.75rem',
+              fontSize: '0.75rem',
               fontWeight: 700,
-              gap: '0.35rem',
+              gap: '0.3rem',
+              borderRadius: 'var(--radius-full)',
               flexShrink: 0
             }}
           >
-            <Eye size={14} />
+            <Eye size={13} />
             <span>Details</span>
           </button>
         </div>

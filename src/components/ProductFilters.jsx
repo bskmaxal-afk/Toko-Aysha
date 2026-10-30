@@ -310,6 +310,111 @@ export default function ProductFilters({
           </div>
         </div>
       </div>
+
+      {/* Active Filter Chips — matches supplier catalog UI */}
+      {hasActiveFilters && (
+        <div 
+          style={{
+            display: 'flex',
+            alignItems: 'center',
+            gap: '0.5rem',
+            flexWrap: 'wrap',
+            marginTop: 'var(--space-3)',
+            paddingTop: 'var(--space-3)',
+            borderTop: '1px dashed var(--color-border)'
+          }}
+        >
+          <span style={{ fontSize: '0.72rem', fontWeight: 600, color: 'var(--color-text-secondary)' }}>
+            Showing:
+          </span>
+
+          {selectedBrand && selectedBrand !== 'all' && (
+            <span 
+              onClick={() => onSelectBrand('all')}
+              style={{
+                display: 'inline-flex',
+                alignItems: 'center',
+                gap: '0.35rem',
+                backgroundColor: '#EFF6FF',
+                color: '#1D4ED8',
+                border: '1px solid #BFDBFE',
+                borderRadius: 'var(--radius-md)',
+                padding: '0.2rem 0.55rem',
+                fontSize: '0.72rem',
+                fontWeight: 700,
+                cursor: 'pointer'
+              }}
+              title="Remove brand filter"
+            >
+              <span>{selectedBrand.toUpperCase()}</span>
+              <span>✕</span>
+            </span>
+          )}
+
+          {selectedOrigin && selectedOrigin !== 'all' && (
+            <span 
+              onClick={() => onSelectOrigin('all')}
+              style={{
+                display: 'inline-flex',
+                alignItems: 'center',
+                gap: '0.35rem',
+                backgroundColor: '#F0FDF4',
+                color: '#15803D',
+                border: '1px solid #BBF7D0',
+                borderRadius: 'var(--radius-md)',
+                padding: '0.2rem 0.55rem',
+                fontSize: '0.72rem',
+                fontWeight: 700,
+                cursor: 'pointer'
+              }}
+              title="Remove country filter"
+            >
+              <span>{selectedOrigin}</span>
+              <span>✕</span>
+            </span>
+          )}
+
+          {selectedCategory && selectedCategory !== 'all' && (
+            <span 
+              onClick={() => onSelectCategory('all')}
+              style={{
+                display: 'inline-flex',
+                alignItems: 'center',
+                gap: '0.35rem',
+                backgroundColor: '#FAF5FF',
+                color: '#7E22CE',
+                border: '1px solid #E9D5FF',
+                borderRadius: 'var(--radius-md)',
+                padding: '0.2rem 0.55rem',
+                fontSize: '0.72rem',
+                fontWeight: 700,
+                cursor: 'pointer'
+              }}
+              title="Remove category filter"
+            >
+              <span>{categories.find(c => c.id === selectedCategory)?.name || selectedCategory}</span>
+              <span>✕</span>
+            </span>
+          )}
+
+          <button
+            type="button"
+            onClick={onResetFilters}
+            style={{
+              background: 'none',
+              border: 'none',
+              color: 'var(--color-text-secondary)',
+              fontSize: '0.72rem',
+              fontWeight: 600,
+              cursor: 'pointer',
+              textDecoration: 'underline',
+              padding: '0.2rem 0.4rem'
+            }}
+          >
+            Clear all
+          </button>
+        </div>
+      )}
     </div>
   );
 }

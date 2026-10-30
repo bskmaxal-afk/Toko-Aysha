@@ -203,7 +203,7 @@ export default function Products() {
     if (origin !== 'all') {
       return `Browse authentic grocery essentials and specialties from ${origin}.`;
     }
-    return 'Browse our complete catalog of 145 authentic Asian groceries, instant noodles, sauces, snacks, and cooking ingredients.';
+    return `Browse our complete catalog of ${products.length} authentic Asian groceries, instant noodles, sauces, snacks, and cooking ingredients.`;
   };
 
   return (

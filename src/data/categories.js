@@ -62,7 +62,7 @@ export const categories = [
     icon: "Utensils",
     color: "#8B5CF6",
     bgTint: "#F5F3FF",
-    image: "/images/categories/cooking-ingredients.svg"
+    image: "/images/categories/cooking-ingredients.jpg"
   },
   {
     id: "canned-packaged-food",
