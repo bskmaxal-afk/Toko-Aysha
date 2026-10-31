@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 import { Link } from 'react-router-dom';
 import { 
   ArrowRight, 
@@ -16,7 +16,7 @@ import CategoryGrid from '../components/CategoryGrid';
 import ProductGrid from '../components/ProductGrid';
 import ProductDetailModal from '../components/ProductDetailModal';
 import StoreInfo from '../components/StoreInfo';
-import { products } from '../data/products';
+import { getPublishedProducts, fetchPublishedProducts } from '../services/productService';
 import { categories } from '../data/categories';
 import { storeConfig } from '../data/storeConfig';
 
@@ -68,6 +68,12 @@ export default function Home() {
   const [previewCategory, setPreviewCategory] = useState('all');
   const [previewOrigin, setPreviewOrigin] = useState('all');
   const [previewSearch, setPreviewSearch] = useState('');
+
+  const [products, setProducts] = useState(() => getPublishedProducts());
+
+  useEffect(() => {
+    fetchPublishedProducts().then(setProducts);
+  }, []);
 
   // 1. Featured Products (Customer Favorites - ~8 items across origins)
   const customerFavorites = products.filter(p => p.featured).slice(0, 8);

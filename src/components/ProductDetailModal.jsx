@@ -3,22 +3,18 @@ import { Link } from 'react-router-dom';
 import { 
   X, 
   Check, 
-  MapPin, 
-  AlertCircle, 
-  ArrowRight, 
+  XCircle,
   ExternalLink,
-  ShieldCheck,
   Tag
 } from 'lucide-react';
 import ProductImage from './ProductImage';
-import { getCountryFlag } from './ProductCard';
-import { categories } from '../data/categories';
-import { formatPrice, hasLivePrice } from '../utils/formatPrice';
+import { getCountryFlag } from '../utils/countryFlags';
+import { normalizeProduct } from '../services/productService';
 
-export default function ProductDetailModal({ product, onClose }) {
+export default function ProductDetailModal({ product: rawProduct, onClose }) {
   // Lock body scroll while modal is open
   useEffect(() => {
-    if (!product) return;
+    if (!rawProduct) return;
     document.body.style.overflow = 'hidden';
     const handleKeyDown = (e) => {
       if (e.key === 'Escape') onClose();
@@ -28,13 +24,20 @@ export default function ProductDetailModal({ product, onClose }) {
       document.body.style.overflow = 'unset';
       window.removeEventListener('keydown', handleKeyDown);
     };
-  }, [product, onClose]);
+  }, [rawProduct, onClose]);
 
-  if (!product) return null;
+  if (!rawProduct) return null;
 
-  const category = categories.find(c => c.id === product.category);
-  const showLivePrice = hasLivePrice(product.price);
-  const priceDisplay = formatPrice(product.price);
+  const product = normalizeProduct(rawProduct);
+  const productId = product.id || product.slug;
+  const brand = product.brand;
+  const categoryName = product.categoryName;
+  const variant = product.variant;
+  const packageSize = product.packageSize;
+  const origin = product.origin;
+  const flag = product.countryFlag || getCountryFlag(origin);
+  const isAvailable = product.isAvailable;
+  const description = product.description;
 
   return (
     <div 
@@ -42,13 +45,13 @@ export default function ProductDetailModal({ product, onClose }) {
       style={{
         position: 'fixed',
         inset: 0,
-        backgroundColor: 'rgba(36, 36, 36, 0.65)',
+        backgroundColor: 'rgba(34, 24, 25, 0.65)',
         backdropFilter: 'blur(4px)',
         zIndex: 1000,
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
-        padding: 'var(--space-4)',
+        padding: 'var(--space-4, 1rem)',
         animation: 'fadeIn 0.2s ease'
       }}
       onClick={(e) => {
@@ -62,14 +65,15 @@ export default function ProductDetailModal({ product, onClose }) {
         aria-labelledby="modal-product-title"
         style={{
           width: '100%',
-          maxWidth: '820px',
+          maxWidth: '780px',
           maxHeight: '90vh',
           overflowY: 'auto',
           backgroundColor: '#FFFFFF',
-          borderRadius: 'var(--radius-xl)',
+          borderRadius: 'var(--radius-xl, 20px)',
           position: 'relative',
           padding: 0,
-          boxShadow: 'var(--shadow-lg)'
+          border: '1px solid var(--color-border, #E8E0D6)',
+          boxShadow: 'var(--shadow-lg, 0 10px 28px rgba(36, 36, 36, 0.12))'
         }}
       >
         {/* Close Button */}
@@ -82,20 +86,27 @@ export default function ProductDetailModal({ product, onClose }) {
             top: '1rem',
             right: '1rem',
             zIndex: 10,
-            width: '38px',
-            height: '38px',
+            width: '36px',
+            height: '36px',
             borderRadius: '50%',
-            backgroundColor: 'rgba(255, 255, 255, 0.9)',
-            border: '1px solid var(--color-border)',
+            backgroundColor: 'rgba(255, 255, 255, 0.92)',
+            border: '1px solid var(--color-border, #E8E0D6)',
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
             cursor: 'pointer',
-            boxShadow: '0 2px 8px rgba(0,0,0,0.08)',
-            color: 'var(--color-text-main)'
+            boxShadow: '0 2px 8px rgba(0,0,0,0.06)',
+            color: 'var(--color-text-main, #221819)',
+            transition: 'all 0.2s ease'
+          }}
+          onMouseEnter={(e) => {
+            e.currentTarget.style.backgroundColor = 'var(--color-bg, #FAF7F2)';
+          }}
+          onMouseLeave={(e) => {
+            e.currentTarget.style.backgroundColor = 'rgba(255, 255, 255, 0.92)';
           }}
         >
-          <X size={20} />
+          <X size={18} />
         </button>
 
         {/* Modal Layout Grid */}
@@ -103,162 +114,224 @@ export default function ProductDetailModal({ product, onClose }) {
           className="modal-grid"
           style={{
             display: 'grid',
-            gridTemplateColumns: '1fr 1.2fr',
-            minHeight: '440px'
+            gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
+            minHeight: '400px'
           }}
         >
-          {/* Left Column: Image Area */}
+          {/* Left Column: Product Image Area */}
           <div 
             style={{
-              backgroundColor: '#FFFFFF',
+              backgroundColor: '#FAF8F5',
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
-              padding: 'var(--space-6)',
-              borderRight: '1px solid var(--color-border)',
+              padding: 'var(--space-6, 1.5rem)',
+              borderRight: '1px solid var(--color-border, #E8E0D6)',
               position: 'relative'
             }}
           >
-            <ProductImage 
-              product={product} 
-              aspectRatio="1/1"
-              className="modal-product-image"
-              style={{ width: '100%', maxWidth: '320px' }}
-            />
+            <div style={{ width: '100%', maxWidth: '320px' }}>
+              <ProductImage 
+                product={product} 
+                aspectRatio="1/1"
+                className="modal-product-image"
+              />
+            </div>
           </div>
 
-          {/* Right Column: Full Product Information */}
+          {/* Right Column: Product Information */}
           <div 
             style={{
-              padding: 'var(--space-8) var(--space-6)',
+              padding: 'var(--space-8, 2rem) var(--space-6, 1.5rem)',
               display: 'flex',
               flexDirection: 'column',
               justifyContent: 'space-between',
-              gap: 'var(--space-5)'
+              gap: 'var(--space-5, 1.25rem)'
             }}
           >
             <div>
-              {/* Badges Bar */}
-              <div style={{ display: 'flex', alignItems: 'center', gap: '0.45rem', flexWrap: 'wrap', marginBottom: 'var(--space-3)' }}>
-                <span className="badge badge-brand" style={{ fontSize: '0.75rem', fontWeight: 800 }}>
-                  {product.brand}
-                </span>
-
-                {category && (
+              {/* Badges Bar: Availability, Brand, Category, Origin */}
+              <div 
+                style={{ 
+                  display: 'flex', 
+                  alignItems: 'center', 
+                  gap: '0.45rem', 
+                  flexWrap: 'wrap', 
+                  marginBottom: 'var(--space-3, 0.75rem)' 
+                }}
+              >
+                {/* Availability Badge */}
+                {isAvailable ? (
                   <span 
-                    className="badge" 
-                    style={{ 
-                      backgroundColor: category.bgTint, 
-                      color: category.color,
+                    style={{
+                      display: 'inline-flex',
+                      alignItems: 'center',
+                      gap: '0.25rem',
+                      backgroundColor: '#EDF7F1',
+                      color: '#1B6839',
+                      border: '1px solid #C6E7D2',
                       fontSize: '0.72rem',
-                      fontWeight: 700 
+                      fontWeight: 700,
+                      padding: '0.22rem 0.65rem',
+                      borderRadius: '9999px'
                     }}
                   >
-                    <Tag size={11} />
-                    {category.name}
+                    <Check size={12} strokeWidth={3} />
+                    Available
+                  </span>
+                ) : (
+                  <span 
+                    style={{
+                      display: 'inline-flex',
+                      alignItems: 'center',
+                      gap: '0.25rem',
+                      backgroundColor: '#F1F5F9',
+                      color: '#64748B',
+                      border: '1px solid #CBD5E1',
+                      fontSize: '0.72rem',
+                      fontWeight: 600,
+                      padding: '0.22rem 0.65rem',
+                      borderRadius: '9999px'
+                    }}
+                  >
+                    <XCircle size={12} strokeWidth={2.5} />
+                    Currently Unavailable
                   </span>
                 )}
 
-                <span className="badge badge-stock" style={{ fontSize: '0.72rem', fontWeight: 700 }}>
-                  <Check size={12} strokeWidth={3} />
-                  Available In Store
-                </span>
+                {/* Brand Badge */}
+                {brand && (
+                  <span 
+                    style={{
+                      fontSize: '0.72rem',
+                      fontWeight: 700,
+                      textTransform: 'uppercase',
+                      letterSpacing: '0.04em',
+                      backgroundColor: 'var(--color-bg, #FAF7F2)',
+                      color: 'var(--color-primary, #7B111A)',
+                      border: '1px solid var(--color-border, #E8E0D6)',
+                      padding: '0.22rem 0.6rem',
+                      borderRadius: '9999px'
+                    }}
+                  >
+                    {brand}
+                  </span>
+                )}
+
+                {/* Category Badge */}
+                {categoryName && (
+                  <span 
+                    style={{
+                      display: 'inline-flex',
+                      alignItems: 'center',
+                      gap: '0.25rem',
+                      fontSize: '0.72rem',
+                      fontWeight: 600,
+                      backgroundColor: 'var(--color-bg, #FAF7F2)',
+                      color: 'var(--color-text-secondary, #685A5B)',
+                      border: '1px solid var(--color-border, #E8E0D6)',
+                      padding: '0.22rem 0.6rem',
+                      borderRadius: '9999px'
+                    }}
+                  >
+                    <Tag size={11} />
+                    {categoryName}
+                  </span>
+                )}
+
+                {/* Country of Origin Badge */}
+                {origin && (
+                  <span 
+                    title={`Product of ${origin}`}
+                    style={{
+                      display: 'inline-flex',
+                      alignItems: 'center',
+                      gap: '0.25rem',
+                      fontSize: '0.72rem',
+                      fontWeight: 600,
+                      backgroundColor: '#FFFFFF',
+                      color: 'var(--color-text-secondary, #685A5B)',
+                      border: '1px solid var(--color-border, #E8E0D6)',
+                      padding: '0.22rem 0.6rem',
+                      borderRadius: '9999px'
+                    }}
+                  >
+                    <span>{flag}</span>
+                    <span>{origin}</span>
+                  </span>
+                )}
               </div>
 
-              {/* Title */}
+              {/* Product Full Name */}
               <h2 
                 id="modal-product-title"
                 style={{
-                  fontSize: '1.45rem',
+                  fontSize: '1.4rem',
                   fontWeight: 800,
-                  color: 'var(--color-text-main)',
+                  color: 'var(--color-text-main, #221819)',
                   lineHeight: 1.25,
-                  marginBottom: '0.35rem'
+                  marginBottom: '0.65rem'
                 }}
               >
                 {product.name}
               </h2>
 
-              {/* Packaging spec */}
-              <div style={{ fontSize: 'var(--text-sm)', color: 'var(--color-text-secondary)', marginBottom: 'var(--space-4)' }}>
-                Package Size: <strong style={{ color: 'var(--color-text-main)' }}>{product.packageSize}</strong>
-                {product.origin && ` • ${getCountryFlag(product.origin)} Product of ${product.origin}`}
-              </div>
-
-              {/* Price Banner */}
-              <div 
-                style={{
-                  backgroundColor: 'var(--color-bg)',
-                  border: '1px solid var(--color-border)',
-                  borderRadius: 'var(--radius-md)',
-                  padding: '0.75rem 1rem',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'space-between',
-                  marginBottom: 'var(--space-4)'
-                }}
-              >
-                <div>
-                  <div style={{ fontSize: '0.7rem', fontWeight: 700, textTransform: 'uppercase', color: 'var(--color-text-secondary)' }}>
-                    Retail Price
-                  </div>
-                  <div style={{ fontSize: '1.25rem', fontWeight: 800, color: 'var(--color-primary)' }}>
-                    {priceDisplay}
-                  </div>
-                </div>
-
+              {/* Product Specifications: Variant & Package Size */}
+              {(variant || packageSize) && (
                 <div 
-                  style={{
-                    fontSize: 'var(--text-xs)',
-                    color: 'var(--color-accent)',
-                    fontWeight: 600,
-                    textAlign: 'right'
+                  style={{ 
+                    display: 'flex',
+                    flexWrap: 'wrap',
+                    gap: '0.75rem',
+                    fontSize: 'var(--text-sm, 0.875rem)', 
+                    color: 'var(--color-text-secondary, #685A5B)', 
+                    marginBottom: 'var(--space-4, 1rem)',
+                    padding: '0.55rem 0.75rem',
+                    backgroundColor: 'var(--color-bg, #FAF7F2)',
+                    borderRadius: 'var(--radius-md, 10px)',
+                    border: '1px solid var(--color-border, #E8E0D6)'
                   }}
                 >
-                  Visit store for current inventory
-                </div>
-              </div>
+                  {variant && (
+                    <div>
+                      <span style={{ fontWeight: 600 }}>Variant / Flavor: </span>
+                      <strong style={{ color: 'var(--color-text-main, #221819)' }}>{variant}</strong>
+                    </div>
+                  )}
 
-              {/* Description */}
-              <div style={{ marginBottom: 'var(--space-4)' }}>
-                <h4 style={{ fontSize: '0.85rem', fontWeight: 800, textTransform: 'uppercase', color: 'var(--color-text-secondary)', marginBottom: '0.35rem' }}>
-                  About This Product
-                </h4>
-                <p style={{ fontSize: 'var(--text-sm)', color: 'var(--color-text-main)', lineHeight: 1.55 }}>
-                  {product.description}
-                </p>
-              </div>
-
-              {/* Ingredients if known */}
-              {product.ingredients && (
-                <div style={{ marginBottom: 'var(--space-3)' }}>
-                  <h4 style={{ fontSize: '0.8rem', fontWeight: 800, textTransform: 'uppercase', color: 'var(--color-text-secondary)', marginBottom: '0.25rem' }}>
-                    Ingredients
-                  </h4>
-                  <p style={{ fontSize: '0.8rem', color: 'var(--color-text-secondary)', lineHeight: 1.45 }}>
-                    {product.ingredients}
-                  </p>
+                  {packageSize && (
+                    <div>
+                      <span style={{ fontWeight: 600 }}>Package Size / Weight: </span>
+                      <strong style={{ color: 'var(--color-text-main, #221819)' }}>{packageSize}</strong>
+                    </div>
+                  )}
                 </div>
               )}
 
-              {/* Allergens Notice */}
-              {product.allergens && (
-                <div 
-                  style={{
-                    display: 'flex',
-                    alignItems: 'flex-start',
-                    gap: '0.5rem',
-                    backgroundColor: '#FEF3C7',
-                    border: '1px solid #FDE68A',
-                    padding: '0.65rem 0.85rem',
-                    borderRadius: 'var(--radius-md)',
-                    marginBottom: 'var(--space-2)'
-                  }}
-                >
-                  <AlertCircle size={16} style={{ color: '#D97706', flexShrink: 0, marginTop: '2px' }} />
-                  <div style={{ fontSize: '0.75rem', color: '#92400E', lineHeight: 1.4 }}>
-                    <strong>Allergen Notice:</strong> {product.allergens}
-                  </div>
+              {/* Description */}
+              {description && (
+                <div style={{ marginBottom: 'var(--space-4, 1rem)' }}>
+                  <h4 
+                    style={{ 
+                      fontSize: '0.8rem', 
+                      fontWeight: 800, 
+                      textTransform: 'uppercase', 
+                      letterSpacing: '0.04em',
+                      color: 'var(--color-text-secondary, #685A5B)', 
+                      marginBottom: '0.35rem' 
+                    }}
+                  >
+                    Product Description
+                  </h4>
+                  <p 
+                    style={{ 
+                      fontSize: 'var(--text-sm, 0.875rem)', 
+                      color: 'var(--color-text-main, #221819)', 
+                      lineHeight: 1.6 
+                    }}
+                  >
+                    {description}
+                  </p>
                 </div>
               )}
             </div>
@@ -270,48 +343,39 @@ export default function ProductDetailModal({ product, onClose }) {
                 alignItems: 'center',
                 justifyContent: 'space-between',
                 flexWrap: 'wrap',
-                gap: 'var(--space-3)',
-                paddingTop: 'var(--space-4)',
-                borderTop: '1px solid var(--color-border)'
+                gap: 'var(--space-3, 0.75rem)',
+                paddingTop: 'var(--space-4, 1rem)',
+                borderTop: '1px solid var(--color-border, #E8E0D6)'
               }}
             >
               <Link
-                to={`/products/${product.id}`}
+                to={`/products/${productId}`}
                 onClick={onClose}
-                className="btn btn-secondary btn-sm"
+                className="btn btn-primary btn-sm"
+                style={{
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  gap: '0.4rem',
+                  fontSize: '0.82rem',
+                  fontWeight: 700
+                }}
               >
-                <span>Full Product Page</span>
+                <span>View Full Page</span>
                 <ExternalLink size={14} />
               </Link>
 
-              <Link
-                to="/visit-us"
+              <button
+                type="button"
                 onClick={onClose}
-                className="btn btn-primary btn-sm"
+                className="btn btn-secondary btn-sm"
+                style={{ fontSize: '0.82rem' }}
               >
-                <MapPin size={15} />
-                <span>Visit Store to Purchase</span>
-              </Link>
+                Close
+              </button>
             </div>
           </div>
         </div>
       </div>
-
-      {/* Responsive Inline CSS for Modal */}
-      <style>{`
-        @keyframes fadeIn {
-          from { opacity: 0; }
-          to { opacity: 1; }
-        }
-        @media (max-width: 768px) {
-          .modal-grid {
-            grid-template-columns: 1fr !important;
-          }
-          .modal-content {
-            max-height: 94vh !important;
-          }
-        }
-      `}</style>
     </div>
   );
 }

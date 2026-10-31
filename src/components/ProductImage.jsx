@@ -39,16 +39,18 @@ const CATEGORY_COLORS = {
  * If external/local image fails to load, cleanly renders a supermarket
  * branded product badge matching the product's authentic category colors.
  */
-export default function ProductImage({ product, className = '', aspectRatio = '1/1' }) {
+export default function ProductImage({ product, className = '', aspectRatio = '1/1', style = {} }) {
   const [hasError, setHasError] = useState(false);
 
-  const categoryId = product?.category || 'instant-noodles';
+  const categoryId = product?.category?.slug || product?.category_id || product?.category || 'instant-noodles';
   const categoryConfig = categories.find(c => c.id === categoryId);
   const IconComponent = CATEGORY_ICONS[categoryId] || ShoppingBag;
   const colorScheme = CATEGORY_COLORS[categoryId] || { bg: '#FAF7F2', accent: '#7B111A' };
+  const imageSrc = product?.image_path || product?.image;
+  const packageSize = product?.package_size || product?.packageSize;
 
   // If user provided a working image path and no error occurred yet
-  if (product?.image && !hasError) {
+  if (imageSrc && !hasError) {
     return (
       <div 
         className={`product-image-container ${className}`}
@@ -56,16 +58,17 @@ export default function ProductImage({ product, className = '', aspectRatio = '1
           aspectRatio,
           position: 'relative',
           overflow: 'hidden',
-          backgroundColor: '#FFFFFF',
+          backgroundColor: '#FAF8F5',
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',
-          padding: '1rem'
+          padding: '0.85rem',
+          ...style
         }}
       >
         <img
-          src={product.image}
-          alt={product.name}
+          src={imageSrc}
+          alt={product.name || 'Product packshot'}
           onError={() => setHasError(true)}
           loading="lazy"
           style={{
@@ -88,13 +91,14 @@ export default function ProductImage({ product, className = '', aspectRatio = '1
         aspectRatio,
         position: 'relative',
         overflow: 'hidden',
-        backgroundColor: '#F8FAFC',
+        backgroundColor: '#FAF8F5',
         borderBottom: '1px solid var(--color-border)',
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
         justifyContent: 'center',
-        padding: '1.25rem'
+        padding: '1.25rem',
+        ...style
       }}
     >
       {/* Decorative concentric background circle */}
@@ -105,7 +109,7 @@ export default function ProductImage({ product, className = '', aspectRatio = '1
           height: '75%',
           borderRadius: '50%',
           backgroundColor: '#FFFFFF',
-          opacity: 0.75,
+          opacity: 0.85,
           boxShadow: '0 4px 12px rgba(0,0,0,0.03)'
         }}
       />
@@ -115,19 +119,19 @@ export default function ProductImage({ product, className = '', aspectRatio = '1
         style={{
           position: 'relative',
           zIndex: 2,
-          width: '56px',
-          height: '56px',
-          borderRadius: '16px',
+          width: '52px',
+          height: '52px',
+          borderRadius: '14px',
           backgroundColor: colorScheme.accent,
           color: '#FFFFFF',
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',
-          boxShadow: `0 6px 14px ${colorScheme.accent}35`,
-          marginBottom: '0.65rem'
+          boxShadow: `0 6px 14px ${colorScheme.accent}25`,
+          marginBottom: '0.6rem'
         }}
       >
-        <IconComponent size={28} strokeWidth={2} />
+        <IconComponent size={26} strokeWidth={2} />
       </div>
 
       {/* Brand & Category Label */}
@@ -139,26 +143,28 @@ export default function ProductImage({ product, className = '', aspectRatio = '1
           maxWidth: '90%'
         }}
       >
-        <span 
-          style={{
-            display: 'inline-block',
-            fontSize: '0.7rem',
-            fontWeight: 800,
-            letterSpacing: '0.06em',
-            textTransform: 'uppercase',
-            color: colorScheme.accent,
-            backgroundColor: '#FFFFFF',
-            padding: '0.2rem 0.55rem',
-            borderRadius: '9999px',
-            boxShadow: '0 1px 3px rgba(0,0,0,0.06)',
-            marginBottom: '0.25rem'
-          }}
-        >
-          {product?.brand || 'Toko Aysha'}
-        </span>
+        {product?.brand && (
+          <span 
+            style={{
+              display: 'inline-block',
+              fontSize: '0.68rem',
+              fontWeight: 800,
+              letterSpacing: '0.04em',
+              textTransform: 'uppercase',
+              color: colorScheme.accent,
+              backgroundColor: '#FFFFFF',
+              padding: '0.18rem 0.5rem',
+              borderRadius: '9999px',
+              boxShadow: '0 1px 3px rgba(0,0,0,0.06)',
+              marginBottom: '0.2rem'
+            }}
+          >
+            {product.brand}
+          </span>
+        )}
         <div 
           style={{
-            fontSize: '0.75rem',
+            fontSize: '0.72rem',
             fontWeight: 600,
             color: '#707070',
             whiteSpace: 'nowrap',
@@ -166,28 +172,28 @@ export default function ProductImage({ product, className = '', aspectRatio = '1
             textOverflow: 'ellipsis'
           }}
         >
-          {categoryConfig?.name || 'Grocery'}
+          {categoryConfig?.name || 'Grocery Item'}
         </div>
       </div>
 
       {/* Packaging Size Badge if available */}
-      {product?.packageSize && (
+      {packageSize && (
         <span 
           style={{
             position: 'absolute',
             bottom: '8px',
             right: '8px',
-            fontSize: '0.68rem',
+            fontSize: '0.65rem',
             fontWeight: 700,
             color: '#242424',
-            backgroundColor: 'rgba(255, 255, 255, 0.92)',
+            backgroundColor: 'rgba(255, 255, 255, 0.94)',
             backdropFilter: 'blur(4px)',
             padding: '0.15rem 0.45rem',
             borderRadius: '4px',
             border: '1px solid #E8E4DC'
           }}
         >
-          {product.packageSize}
+          {packageSize}
         </span>
       )}
     </div>

@@ -5,13 +5,29 @@ import SearchBar from '../components/SearchBar';
 import ProductFilters from '../components/ProductFilters';
 import ProductGrid from '../components/ProductGrid';
 import ProductDetailModal from '../components/ProductDetailModal';
-import { products } from '../data/products';
+import { 
+  getPublishedProducts, 
+  fetchPublishedProducts, 
+  fetchPublicCategories, 
+  fetchPublicCountries 
+} from '../services/productService';
 import { categories } from '../data/categories';
 
 const ITEMS_PER_PAGE = 12;
 
 export default function Products() {
   const [searchParams, setSearchParams] = useSearchParams();
+
+  // Read published products from service with live Supabase hydration
+  const [products, setProducts] = useState(() => getPublishedProducts());
+  const [categoriesList, setCategoriesList] = useState(categories);
+  const [originOptions, setOriginOptions] = useState(null);
+
+  useEffect(() => {
+    fetchPublishedProducts().then(setProducts);
+    fetchPublicCategories().then(setCategoriesList);
+    fetchPublicCountries().then(setOriginOptions);
+  }, []);
 
   // Read URL query parameters
   const initialCategory = searchParams.get('category') || 'all';
@@ -141,12 +157,13 @@ export default function Products() {
       // 3. Brand Filter
       const matchBrand = brand === 'all' || item.brand === brand;
 
-      // 4. Search Filter (name, brand, description, origin, packageSize)
+      // 4. Search Filter (name, brand, variant, description, origin, packageSize)
       const q = searchQuery.toLowerCase().trim();
       const matchSearch = !q || 
-        item.name.toLowerCase().includes(q) ||
-        item.brand.toLowerCase().includes(q) ||
-        item.description.toLowerCase().includes(q) ||
+        (item.name && item.name.toLowerCase().includes(q)) ||
+        (item.brand && item.brand.toLowerCase().includes(q)) ||
+        (item.variant && item.variant.toLowerCase().includes(q)) ||
+        (item.description && item.description.toLowerCase().includes(q)) ||
         (item.origin && item.origin.toLowerCase().includes(q)) ||
         (item.packageSize && item.packageSize.toLowerCase().includes(q));
 
@@ -344,6 +361,8 @@ export default function Products() {
 
         {/* Product Filters & Sorters */}
         <ProductFilters
+          categories={categoriesList}
+          originOptions={originOptions}
           selectedCategory={category}
           onSelectCategory={handleSelectCategory}
           selectedOrigin={origin}

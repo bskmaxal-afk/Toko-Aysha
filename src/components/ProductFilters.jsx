@@ -13,6 +13,8 @@ export const ORIGIN_OPTIONS = [
 ];
 
 export default function ProductFilters({
+  categories: dynamicCategories,
+  originOptions: customOriginOptions,
   selectedCategory,
   onSelectCategory,
   selectedOrigin = 'all',
@@ -26,6 +28,8 @@ export default function ProductFilters({
   onResetFilters,
   hasActiveFilters = false
 }) {
+  const activeCategories = dynamicCategories || categories;
+  const originOptions = customOriginOptions || ORIGIN_OPTIONS;
   return (
     <div 
       className="product-filters-wrapper"
@@ -94,7 +98,7 @@ export default function ProductFilters({
             WebkitOverflowScrolling: 'touch'
           }}
         >
-          {ORIGIN_OPTIONS.map((opt) => {
+          {originOptions.map((opt) => {
             const isSelected = selectedOrigin.toLowerCase() === opt.id.toLowerCase();
             return (
               <button
@@ -183,7 +187,7 @@ export default function ProductFilters({
             All Categories
           </button>
 
-          {categories.map((cat) => {
+          {activeCategories.map((cat) => {
             const isSelected = selectedCategory === cat.id;
             return (
               <button
