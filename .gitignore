@@ -1,3 +1,11 @@
+# Local env
+.env
+.env*.local
+
+# Nested admin backup
+toko-aysha-admin/
+backups/
+
 # Logs
 logs
 *.log
