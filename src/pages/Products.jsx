@@ -144,7 +144,7 @@ export default function Products() {
     }
     const unique = [...new Set(pool.map(p => p.brand))].sort();
     return unique;
-  }, [category, origin]);
+  }, [products, category, origin]);
 
   // Filter and Sort Products
   const filteredProducts = useMemo(() => {
@@ -193,7 +193,7 @@ export default function Products() {
       }
       return 0;
     });
-  }, [category, origin, brand, searchQuery, sortBy]);
+  }, [products, category, origin, brand, searchQuery, sortBy]);
 
   // Paginated/Sliced subset
   const displayedProducts = filteredProducts.slice(0, visibleCount);
