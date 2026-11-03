@@ -23,13 +23,27 @@ export default function ProductDetail() {
   const [copied, setCopied] = useState(false);
 
   // Find product by id or slug with live Supabase support
+  const [loading, setLoading] = useState(true);
   const [product, setProduct] = useState(() => getProductById(id));
 
   useEffect(() => {
-    fetchProductById(id).then((p) => {
-      if (p) setProduct(p);
-    });
+    setLoading(true);
+    fetchProductById(id)
+      .then((p) => {
+        setProduct(p);
+      })
+      .finally(() => setLoading(false));
   }, [id]);
+
+  if (loading) {
+    return (
+      <div className="section" style={{ minHeight: '60vh', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+        <div style={{ color: 'var(--color-text-secondary)', fontSize: '1rem', fontWeight: 600 }}>
+          Loading authentic product details...
+        </div>
+      </div>
+    );
+  }
 
   if (!product) {
     return (

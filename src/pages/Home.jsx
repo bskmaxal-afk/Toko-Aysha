@@ -68,30 +68,52 @@ export default function Home() {
   const [previewCategory, setPreviewCategory] = useState('all');
   const [previewOrigin, setPreviewOrigin] = useState('all');
   const [previewSearch, setPreviewSearch] = useState('');
-
+  const [loading, setLoading] = useState(true);
   const [products, setProducts] = useState(() => getPublishedProducts());
 
   useEffect(() => {
-    fetchPublishedProducts().then(setProducts);
+    setLoading(true);
+    fetchPublishedProducts()
+      .then((prods) => setProducts(prods || []))
+      .finally(() => setLoading(false));
   }, []);
 
   // 1. Featured Products (Customer Favorites - ~8 items across origins)
-  const customerFavorites = products.filter(p => p.featured).slice(0, 8);
+  const customerFavorites = useMemo(() => {
+    const featured = products.filter(p => p.featured);
+    return featured.length > 0 ? featured.slice(0, 8) : products.slice(0, 8);
+  }, [products]);
+
+  // Dynamic origin counts
+  const originCounts = useMemo(() => {
+    const counts = {};
+    products.forEach((p) => {
+      const orig = p.origin || '';
+      counts[orig] = (counts[orig] || 0) + 1;
+    });
+    return counts;
+  }, [products]);
+
+  const importedCount = useMemo(() => {
+    return products.filter(p => p.origin && !p.origin.toLowerCase().includes('indonesia')).length;
+  }, [products]);
 
   // 2. Interactive Catalog Preview Filter
-  const previewProducts = products.filter(p => {
-    const matchesCategory = previewCategory === 'all' || p.category === previewCategory;
-    let matchesOrigin = true;
-    if (previewOrigin === 'imported') {
-      matchesOrigin = Boolean(p.origin && !p.origin.toLowerCase().includes('indonesia'));
-    } else if (previewOrigin !== 'all') {
-      matchesOrigin = Boolean(p.origin && p.origin.toLowerCase().includes(previewOrigin.toLowerCase()));
-    }
-    const matchesSearch = !previewSearch || 
-      p.name.toLowerCase().includes(previewSearch.toLowerCase()) ||
-      p.brand.toLowerCase().includes(previewSearch.toLowerCase());
-    return matchesCategory && matchesOrigin && matchesSearch;
-  }).slice(0, 8);
+  const previewProducts = useMemo(() => {
+    return products.filter(p => {
+      const matchesCategory = previewCategory === 'all' || p.category === previewCategory;
+      let matchesOrigin = true;
+      if (previewOrigin === 'imported') {
+        matchesOrigin = Boolean(p.origin && !p.origin.toLowerCase().includes('indonesia'));
+      } else if (previewOrigin !== 'all') {
+        matchesOrigin = Boolean(p.origin && p.origin.toLowerCase().includes(previewOrigin.toLowerCase()));
+      }
+      const matchesSearch = !previewSearch || 
+        p.name.toLowerCase().includes(previewSearch.toLowerCase()) ||
+        p.brand.toLowerCase().includes(previewSearch.toLowerCase());
+      return matchesCategory && matchesOrigin && matchesSearch;
+    }).slice(0, 8);
+  }, [products, previewCategory, previewOrigin, previewSearch]);
 
   return (
     <div className="home-page">
@@ -108,7 +130,7 @@ export default function Home() {
             actionLink="/products"
             actionText={`View All ${products.length} Products`}
           />
-          <CategoryGrid />
+          <CategoryGrid products={products} />
         </div>
       </section>
 
@@ -120,7 +142,7 @@ export default function Home() {
             title="Shop by Regional Origin"
             description="Explore curated grocery specialties sourced from Indonesia, South Korea, Thailand, and China."
             actionLink="/products?origin=imported"
-            actionText="Explore Asian Imports (20)"
+            actionText={`Explore Asian Imports (${importedCount})`}
           />
 
           <div 
@@ -170,7 +192,7 @@ export default function Home() {
                       border: '1px solid var(--color-border)'
                     }}
                   >
-                    {rc.count} Products
+                    {originCounts[rc.id] || 0} Products
                   </span>
                 </div>
 
@@ -199,12 +221,13 @@ export default function Home() {
           <SectionHeading
             eyebrow="Popular Asian Picks"
             title="Customer Favorites"
-            description="Our best-loved items — from Indomie Mi Goreng and Sambal ABC to fiery Samyang Buldak, Shin Ramyun, and Aroy-D Coconut Milk."
+            description="Our best-loved items — verified and updated directly by our store administrators."
             actionLink="/products"
             actionText="Explore Entire Catalog"
           />
           <ProductGrid
             products={customerFavorites}
+            loading={loading}
             onViewDetails={(product) => setSelectedProduct(product)}
           />
         </div>
@@ -452,6 +475,7 @@ export default function Home() {
           {/* Product Grid Preview */}
           <ProductGrid
             products={previewProducts}
+            loading={loading}
             onViewDetails={(product) => setSelectedProduct(product)}
             onResetFilters={() => {
               setPreviewCategory('all');

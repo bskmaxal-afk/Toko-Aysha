@@ -19,14 +19,24 @@ export default function Products() {
   const [searchParams, setSearchParams] = useSearchParams();
 
   // Read published products from service with live Supabase hydration
+  const [loading, setLoading] = useState(true);
   const [products, setProducts] = useState(() => getPublishedProducts());
   const [categoriesList, setCategoriesList] = useState(categories);
   const [originOptions, setOriginOptions] = useState(null);
 
   useEffect(() => {
-    fetchPublishedProducts().then(setProducts);
-    fetchPublicCategories().then(setCategoriesList);
-    fetchPublicCountries().then(setOriginOptions);
+    setLoading(true);
+    Promise.all([
+      fetchPublishedProducts(),
+      fetchPublicCategories(),
+      fetchPublicCountries()
+    ])
+      .then(([prods, cats, countries]) => {
+        setProducts(prods || []);
+        if (cats && cats.length > 0) setCategoriesList(cats);
+        if (countries && countries.length > 0) setOriginOptions(countries);
+      })
+      .finally(() => setLoading(false));
   }, []);
 
   // Read URL query parameters
@@ -380,6 +390,7 @@ export default function Products() {
         {/* Product Grid */}
         <ProductGrid
           products={displayedProducts}
+          loading={loading}
           onViewDetails={(product) => setSelectedProduct(product)}
           onResetFilters={handleResetFilters}
         />

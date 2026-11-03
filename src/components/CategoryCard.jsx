@@ -1,13 +1,12 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { ArrowRight } from 'lucide-react';
-import { products } from '../data/products';
 
-export default function CategoryCard({ category }) {
+export default function CategoryCard({ category, productCount }) {
   const [imgError, setImgError] = useState(false);
 
-  // Calculate actual item count in dataset
-  const count = products.filter(p => p.category === category.id).length;
+  // Dynamic live count from Supabase
+  const count = productCount !== undefined ? productCount : 0;
 
   return (
     <Link

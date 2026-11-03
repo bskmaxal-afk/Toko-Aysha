@@ -105,9 +105,12 @@ export function normalizeProduct(raw) {
 }
 
 /**
- * Synchronous local catalog fallback
+ * Synchronous local catalog fallback (Empty by default in live database mode)
  */
 export function getPublishedProducts() {
+  if (isSupabaseConfigured) {
+    return [];
+  }
   return localProducts
     .map(normalizeProduct)
     .filter(p => p && p.isPublished && !p.isArchived);
@@ -116,10 +119,11 @@ export function getPublishedProducts() {
 /**
  * Asynchronously fetch all eligible published products from Supabase
  * Enforces rule: status = 'published' AND archived_at IS NULL
+ * Pure database source: never falls back to dummy local data when Supabase is active.
  */
 export async function fetchPublishedProducts() {
   if (!isSupabaseConfigured || !supabase) {
-    return getPublishedProducts();
+    return [];
   }
 
   try {
@@ -136,18 +140,18 @@ export async function fetchPublishedProducts() {
       .order('updated_at', { ascending: false });
 
     if (error) {
-      console.warn('Supabase products fetch failed, using local fallback:', error.message);
-      return getPublishedProducts();
+      console.error('Supabase products fetch error:', error.message);
+      return [];
     }
 
     if (!data || data.length === 0) {
-      return getPublishedProducts();
+      return [];
     }
 
     return data.map(normalizeProduct).filter(p => p && p.isPublished && !p.isArchived);
   } catch (err) {
     console.error('fetchPublishedProducts exception:', err);
-    return getPublishedProducts();
+    return [];
   }
 }
 
@@ -180,12 +184,18 @@ export async function fetchProductById(idOrSlug) {
       if (!error && data) {
         return normalizeProduct(data);
       }
+      return null;
     } catch (err) {
-      console.warn('fetchProductById supabase error, trying local:', err);
+      console.warn('fetchProductById error:', err);
+      return null;
     }
   }
 
-  // Fallback to local
+  if (isSupabaseConfigured) {
+    return null;
+  }
+
+  // Fallback to local only if database is completely unconfigured
   return getProductById(idOrSlug);
 }
 

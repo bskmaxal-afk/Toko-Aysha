@@ -2,7 +2,7 @@ import React from 'react';
 import CategoryCard from './CategoryCard';
 import { categories } from '../data/categories';
 
-export default function CategoryGrid({ limit }) {
+export default function CategoryGrid({ limit, products = [] }) {
   const displayCategories = limit ? categories.slice(0, limit) : categories;
 
   return (
@@ -14,9 +14,18 @@ export default function CategoryGrid({ limit }) {
         gap: 'var(--space-5)'
       }}
     >
-      {displayCategories.map((category) => (
-        <CategoryCard key={category.id} category={category} />
-      ))}
+      {displayCategories.map((category) => {
+        const count = products.filter(
+          p => p.category === category.id || p.category === category.slug
+        ).length;
+        return (
+          <CategoryCard 
+            key={category.id} 
+            category={category} 
+            productCount={count}
+          />
+        );
+      })}
     </div>
   );
 }
